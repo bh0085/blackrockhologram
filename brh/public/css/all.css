@@ -4748,12 +4748,50 @@ a.badge:hover {
 .affix {
   position: fixed;
 }
+body {
+  box-sizing: border-box;
+  padding: 2em;
+  padding-top: .5em;
+}
 body .bg-image {
-  opacity: .25;
-  height: 100%;
-  width: 100%;
+  opacity: .15;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
   position: absolute;
   background-image: url("/img/maps/map_bw.gif");
   background-position: center center;
   background-repeat: no-repeat;
+}
+body .about {
+  background-color: white;
+  border: 1px lightgray solid;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 20em;
+  bottom: 0px;
+  right: 0px;
+  margin-right: 2em;
+  margin-bottom: 2em;
+  padding: 1.5em;
+}
+body .about .expanded-content {
+  display: none;
+}
+body .about .compressed-content {
+  display: block;
+}
+body .about.expanded {
+  width: 30em;
+  left: 50%;
+  margin-left: -17em;
+  margin-right: 0em;
+}
+body .about.expanded .compressed-content {
+  display: none;
+}
+body .about.expanded .expanded-content {
+  display: block;
 }

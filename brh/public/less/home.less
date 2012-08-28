@@ -1,12 +1,52 @@
 body{
+  box-sizing:border-box;
+  padding:2em;
+  padding-top:.5em;
   .bg-image{
-    opacity:.25;
-    height:100%;
-    width:100%;
+    opacity:.15;
+    left:0px;
+    top:0px;
+    right:0px;
+    bottom:0px;
     position:absolute;
     background-image:url("/img/maps/map_bw.gif");
     background-position:center center;
     background-repeat: no-repeat;
     
     }
-}
+  .about{
+    background-color:white;
+    border:1px lightgray solid;
+    border-radius:3px;
+    box-shadow: @boxShadowWeak;
+
+    position:fixed;
+    width: 20em;
+    bottom:0px;
+    right:0px;
+    
+    margin-right:2em;
+    margin-bottom:2em;
+    padding:1.5em;
+
+    .expanded-content{
+      display:none;
+      }
+    .compressed-content{
+      display:block;
+      }
+    }
+
+  .about.expanded{
+    width:30em;
+    left:50%;
+    margin-left:-17em;
+    margin-right:0em;
+    .compressed-content{
+      display:none;
+      }
+    .expanded-content{
+      display:block;
+      }
+    }
+  }
