@@ -22,6 +22,12 @@ Description: brh README
         
         
         
+        
+        Cloning development.ini from the template included
+        ---
+        cp development.ini.template development.ini
+        
+        
         0.0
         ---
         

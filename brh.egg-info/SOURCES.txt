@@ -16,6 +16,13 @@ brh.egg-info/entry_points.txt
 brh.egg-info/not-zip-safe
 brh.egg-info/requires.txt
 brh.egg-info/top_level.txt
+brh/public/css/all.css
+brh/public/img/maps/map_bw.gif
+brh/public/js/deps/jquery-1.7.2.min.js
+brh/public/less/bootstrap/tests/css-tests.css
+brh/public/less/bootstrap/tests/css-tests.html
+brh/public/less/bootstrap/tests/forms.html
+brh/public/less/bootstrap/tests/navbar.html
 brh/scripts/__init__.py
 brh/scripts/initializedb.py
 brh/static/favicon.ico
@@ -27,4 +34,8 @@ brh/static/pylons.css
 brh/static/pyramid-small.png
 brh/static/pyramid.png
 brh/static/transparent.gif
+brh/templates/home.mako
 brh/templates/mytemplate.pt
+brh/templates/styles.mako
+brh/templates/home/about.mako
+brh/templates/home/home.mako

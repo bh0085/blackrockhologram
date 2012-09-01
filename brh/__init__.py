@@ -1,15 +1,22 @@
 from pyramid.config import Configurator
 from sqlalchemy import engine_from_config
 
-from .models import DBSession
+from .models import PBSession, BRHSession, GroupResourceFactory
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    engine = engine_from_config(settings, 'sqlalchemy.')
-    DBSession.configure(bind=engine)
+    pb_engine = engine_from_config(settings, 'pb_sqlalchemy.')
+    brh_engine = engine_from_config(settings, 'brh_sqlalchemy.')
+
+    PBSession.configure(bind=pb_engine)
+    BRHSession.configure(bind=brh_engine)
+
     config = Configurator(settings=settings)
     config.add_route('home', '/')
+    config.add_route('handle_pass','/handlepass')
+    config.add_route("group_main", '/groups/{passphrase}',
+                     factory = GroupResourceFactory)
 
     #static routing
     config.add_static_view('/js/', 'public/js', cache_max_age=3600)

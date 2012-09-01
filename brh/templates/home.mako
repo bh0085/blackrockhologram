@@ -11,5 +11,8 @@
   <%include file="/home/about.mako"/>
   <%include file="/styles.mako"/>
   <script type="text/javascript" src="/js/deps/jquery-1.7.2.min.js"></script>
+  <script src="/js/deps/underscore-min.js"></script>
+  <script src="/js/deps/backbone-min.js"></script>
+  <script src="/js/deps/mustache.js"></script>
 </body>
 </html>
