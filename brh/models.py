@@ -8,6 +8,8 @@ from sqlalchemy.orm import (
     sessionmaker,
     )
 
+from .utils import pictobin_helpers as ph
+
 from zope.sqlalchemy import ZopeTransactionExtension
 
 PBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
@@ -20,6 +22,8 @@ class PBEBin(Base_PB):
     __tablename__ = 'ebin'
     id = Column(Integer, nullable = False, primary_key = True)
     key = Column(Unicode, nullable = False)
+    def unsyncedJSON(self, request = None, **kwargs):
+        return {"url":"{0}/{1}".format(ph.pictobin_url,self.key)}
 
 class PBEBinMeta(Base_PB):
     __tablename__ = 'ebinmeta'
@@ -33,9 +37,20 @@ class PBPicture(Base_PB):
     id = Column(Integer, primary_key = True)
     date_taken = Column(DateTime, nullable=True)
     gallery_id = Column(Integer, ForeignKey('ebin.id'), index = True)
+    creatorid = Column(Integer, ForeignKey('user.id'), nullable=False)
+    def unsyncedJSON(self, request = None, **kwargs):
+        out = {}
+        out['creator_name'] = self.creator.name,
+        return out
+
+class PBUser(Base_PB):
+    __tablename__='user'
+    id = Column(Integer, primary_key = True)
+    name = Column(Unicode, nullable = True)
 
 PBEBinMeta.ebin = relation(PBEBin, backref = 'meta')
 PBPicture.ebin = relation(PBEBin, backref = 'pictures')
+PBPicture.creator = relation(PBUser, backref = 'pictures')
 
 #BRH Classes
 # maps 1:1 to PBEBin

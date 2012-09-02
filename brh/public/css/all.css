@@ -4795,3 +4795,12 @@ body .about.expanded .compressed-content {
 body .about.expanded .expanded-content {
   display: block;
 }
+.passphrase-submitter {
+  left: 25%;
+  width: 50%;
+  position: relative;
+  padding: 2em;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid lightgray;
+}
