@@ -13,6 +13,9 @@ $(function(){
 
 
 function showpics(pics){
+    if(pics.length ==0){
+	return;
+    }
     console.log("running d3");
     // data that you want to plot, I've used separate arrays for x and y values
     xdata = _.map(pics, function(e){return e.get("age")});
