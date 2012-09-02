@@ -35,6 +35,29 @@ def handle_pass(request):
 
 @view_config(route_name='group_main', renderer ='group_main.mako', http_cache=default_cache)
 def group_main(request):
+    return {'sessionInfo':establish_context(request),
+            'view':'main'}
+
+
+@view_config(route_name="group_molehill", renderer="group_main.mako",http_cache=default_cache)
+def group_molehill(request):
+    return {'sessionInfo':establish_context(request),
+            'view':'molehill'}
+
+
+@view_config(route_name="group_annotationkit", renderer="group_main.mako",http_cache=default_cache)
+def group_annotationkit(request):
+    return {'sessionInfo':establish_context(request),
+            'view':'annotation'}
+
+
+@view_config(route_name="group_notifyme", renderer="group_main.mako",http_cache=default_cache)
+def group_notifyme(request):
+    return {'sessionInfo':establish_context(request),
+            'view':'notifyme'}
+
+
+def establish_context(request):
     c = {}
     c['group'] = request.group.toJSON()
 
@@ -56,9 +79,7 @@ def group_main(request):
         return HTTPFound(request.url)
     else:
         c['ebin'] = PBSession.query(PBEBin).get(first.ebin_id).toJSON(request = request, recurse = True)
-    
-    print "RETURNING ", c
-    return {'sessionInfo':c}
+    return c
 
 
 
@@ -66,3 +87,5 @@ def group_main(request):
 def nosuchgroup(request):
     return render_to_response('errors/nosuchgroup.mako',
                               {})
+
+

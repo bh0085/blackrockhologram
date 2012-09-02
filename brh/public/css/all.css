@@ -4808,12 +4808,15 @@ body .about.expanded .expanded-content {
   display: inline-block;
   position: relative;
   margin: 1em;
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid black;
-  width: 120px;
-  height: 75px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 150px;
+  height: 150px;
 }
-.pb-pic-view .info-display {
+.pb-pic-view img {
+  position: absolute;
+  display: block;
+}
+.info-display {
   font-size: .75em;
   color: white;
   list-style: none;

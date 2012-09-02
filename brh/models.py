@@ -41,7 +41,47 @@ class PBPicture(Base_PB):
     def unsyncedJSON(self, request = None, **kwargs):
         out = {}
         out['creator_name'] = self.creator.name,
+        
+        for t in self.thumbs:
+            if(t.size == PBThumb.THUMB_SIZES['medium']):
+                   out['medium_thumb']  = t.toJSON()
+                        
         return out
+
+
+class PBThumb(Base_PB):
+    __tablename__ = 'thumb'
+    THUMB_SIZES={"small":0,
+                 "medium":1,
+                 "preview":2}
+
+    THUMB_ASPECTS ={'square':0,
+                    'wide':1,
+                    'tall':2}
+
+    THUMB_DIMENSIONS={0:{0:[64,64],
+                         1:[128,128],
+                         2:[512,512]},
+                      1:{0:[64,36],
+                         1:[128,72],
+                         2:[512,288]},
+                      2:{0:[48,64],
+                         1:[96,128],
+                         2:[384,512]}}
+    THUMB_SQUARE_DIMENSIONS={0:64,1:128,2:512}
+
+    #keys
+    id = Column(Integer, primary_key = True)
+    picid = Column(Integer, ForeignKey('picture.id'), nullable = False, index = True)
+    #geometry
+    width = Column(Integer, nullable = False)
+    height = Column(Integer, nullable = False)
+    size = Column(Integer, nullable = False, index = True)
+    aspect = Column(Integer, nullable = False)
+    orientation = Column(Integer, default = 0)
+    x = Column(Integer, nullable = False, default = 0)
+    y = Column(Integer, nullable = False, default = 0)
+    url = Column(Unicode, nullable = True)
 
 class PBUser(Base_PB):
     __tablename__='user'
@@ -51,6 +91,7 @@ class PBUser(Base_PB):
 PBEBinMeta.ebin = relation(PBEBin, backref = 'meta')
 PBPicture.ebin = relation(PBEBin, backref = 'pictures')
 PBPicture.creator = relation(PBUser, backref = 'pictures')
+PBThumb.picture = relation(PBPicture, backref = 'thumbs')
 
 #BRH Classes
 # maps 1:1 to PBEBin

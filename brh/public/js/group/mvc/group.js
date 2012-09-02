@@ -42,8 +42,9 @@ var BinView = Backbone.View.extend({
     render:function(){
 	var json = this.model.toJSON();
 	this.$el.html(Mustache.render(this.template,json));
-	showpics(cache);
+	//showpics(cache,this.el);
 	
+	/*
 	_.each(this.picviews,
 	       function(e){
 		   e.remove();
@@ -56,6 +57,7 @@ var BinView = Backbone.View.extend({
 		   this.$('.pics-container').append(pv.render().$el);
 		   
 	       }, this);
+	 */
 	return this;
     }
 })

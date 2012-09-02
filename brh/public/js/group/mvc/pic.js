@@ -38,6 +38,14 @@ var PBPic = Backbone.Model.extend({
 });
 
 
+var Thumb = Backbone.Model.extend({
+
+});
+
+var ThumbCache = Backbone.Model.extend({
+
+});
+
 var Pic = Backbone.Model.extend({
     seconds:function(){
 	return Math.random() * 1000;
@@ -55,6 +63,15 @@ var PBPicView = Backbone.View.extend({
     render:function(){
 	var json = this.model.toJSON();
 	json.name = json.name?json.name:"untitled";
+
+	
+	var med_width = 150,
+	    med_height= 150;
+	
+	if(json.medium_thumb){
+	    json.medium_thumb.left = (med_width - json.medium_thumb.width)/2;
+	    json.medium_thumb.top = (med_height - json.medium_thumb.height)/2; 
+	} else{ json.medium_thumb = {};}
 	this.$el.html(Mustache.render(this.template, json));
 	return this;
     }

@@ -18,6 +18,14 @@ def main(global_config, **settings):
     config.add_route("group_main", '/groups/{passphrase}',
                      factory = GroupResourceFactory)
 
+
+    config.add_route("group_molehill","/groups/{passphrase}/molehill",
+                     factory=GroupResourceFactory)
+    config.add_route("group_annotationkit","/groups/{passphrase}/annotationkit",
+                     factory=GroupResourceFactory)
+    config.add_route("group_notifyme","/groups/{passphrase}/notifyme",
+                     factory=GroupResourceFactory)
+    
     #static routing
     config.add_static_view('/js/', 'public/js', cache_max_age=3600)
     config.add_static_view('/css/', 'public/css', cache_max_age=3600)
