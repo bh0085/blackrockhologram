@@ -5,7 +5,7 @@ $(function(){
 			   bin:curbin});
     cache = _.map(curbin.get("pictures"), 
 		  function(e){
-		      return new Pic(e);
+		      return new PBPic(e);
 		  });
     $("body").append(gview.render().$el);
 });
@@ -15,7 +15,7 @@ $(function(){
 function showpics(pics){
     console.log("running d3");
     // data that you want to plot, I've used separate arrays for x and y values
-    xdata = _.map(pics, function(e){return e.seconds()});
+    xdata = _.map(pics, function(e){return e.get("age")});
     ydata = _.map(pics, function(e){return e.get('creatorid')});
 
     // size and margins for the chart
@@ -26,11 +26,11 @@ function showpics(pics){
     // x and y scales, I've used linear here but there are other options
     // the scales translate data values to pixel values for you
     var x = d3.scale.linear()
-	    .domain([0, d3.max(xdata)])  // the range of the values to plot
+	    .domain([d3.min(xdata), d3.max(xdata)])  // the range of the values to plot
 	    .range([ 0, width ]);        // the pixel range of the x-axis
 
     var y = d3.scale.linear()
-	    .domain([0, d3.max(ydata)])
+	    .domain([d3.min(ydata), d3.max(ydata)])
 	    .range([ height, 0 ]);
 
     // the chart object, includes all margins

@@ -25,25 +25,37 @@ var GroupView = Backbone.View.extend({
 	var json = this.model.toJSON();
 	this.$el.html(Mustache.render(this.template, json));
 	this.$('.bin-container').append(this.binview.render().$el);
+	
+	
+	
 	return this;
     }
 })
 
-var Pic = Backbone.Model.extend({
-    
-    seconds:function(){
-	return Math.random() * 1000;
-    }
-})
+
 
 var BinView = Backbone.View.extend({
     tagName:"div",
     classNave:"bin-view",
     template:$("#bin-view-template").html(),
+    picviews :[],
     render:function(){
 	var json = this.model.toJSON();
 	this.$el.html(Mustache.render(this.template,json));
 	showpics(cache);
+	
+	_.each(this.picviews,
+	       function(e){
+		   e.remove();
+	       },this);
+	
+	_.each(cache,
+	       function(e){
+		   pv = new PBPicView({"model":e});
+		   this.picviews.push(pv);
+		   this.$('.pics-container').append(pv.render().$el);
+		   
+	       }, this);
 	return this;
     }
 })

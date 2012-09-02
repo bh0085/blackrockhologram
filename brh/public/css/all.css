@@ -4804,3 +4804,17 @@ body .about.expanded .expanded-content {
   border-radius: 8px;
   border: 1px solid lightgray;
 }
+.pb-pic-view {
+  display: inline-block;
+  position: relative;
+  margin: 1em;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid black;
+  width: 120px;
+  height: 75px;
+}
+.pb-pic-view .info-display {
+  font-size: .75em;
+  color: white;
+  list-style: none;
+}

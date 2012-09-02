@@ -14,10 +14,14 @@
     <script src="/js/deps/underscore-min.js"></script>
     <script src="/js/deps/backbone-min.js"></script>
     <script src="/js/deps/mustache.js"></script>
+    <script src="/js/deps/date.js"></script>
     <script type="text/javascript" src="http://mbostock.github.com/d3/d3.v2.js"></script>
+    
+    <%include file="/styles.mako"/>
 
 
     <script src="/js/group/mvc/group.js"></script>
+    <script src="/js/group/mvc/pic.js"></script>
     <script src="/js/group/init_scripts.js"></script>
       
   </body>
