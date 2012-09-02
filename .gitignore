@@ -2,3 +2,4 @@ development.ini
 production.ini
 *.pyc
 *~
+venv
