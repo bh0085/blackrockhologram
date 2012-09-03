@@ -1,0 +1,8 @@
+On master:
+setup.sh
+setup_pg.sh
+run_uwsgi.sh
+
+On slave:
+setup.sh
+run_uwsgi.sh
