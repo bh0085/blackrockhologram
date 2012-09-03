@@ -4887,6 +4887,21 @@ body.home .about.expanded .expanded-content {
   border: 1px lightgray solid;
   box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.15);
 }
+.selection-line.toggled-off {
+  display: none;
+}
+.selection-line.before .thumb.next {
+  outline: 2px solid #0088cc;
+}
+.selection-line.before .thumb.prev {
+  outline: none;
+}
+.selection-line.after .thumb.next {
+  outline: none;
+}
+.selection-line.after .thumb.prev {
+  outline: 2px solid #0088cc;
+}
 .scatter-dot.deselected {
   fill: none;
   stroke: black;

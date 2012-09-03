@@ -22,6 +22,26 @@
  
 }
 
+.selection-line.toggled-off{
+  display:none;
+  }
+.selection-line.before{
+  .thumb.next{
+    outline:2px solid @linkColor;
+    }
+  .thumb.prev{
+    outline:none;
+    }
+  }
+.selection-line.after{
+  .thumb.next{
+    outline:none;
+    }
+  .thumb.prev{
+    outline:2px solid @linkColor;
+    }
+  }
+
 .scatter-dot.deselected{
   fill:none;
   stroke:black;
