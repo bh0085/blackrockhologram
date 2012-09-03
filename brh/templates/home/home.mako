@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <title>Black Rock Hologram</title>
 </head>
-<body>
+<body class="home">
   <div class='bg-image'></div>
-  <div><p>We just got back from the playa so this site isn't really... done yet.</p><p>Enter the passphrase from your token and check it out!</p></div>
+  <div><p>We just got back from the desert so this site isn't really done yet.</p><p>Enter the passphrase from your token and check it out!</p></div>
 
   <div class="passphrase-submitter">
     <div class="passphrase-label"><h4>Enter a passphrase.</h4></div>
@@ -16,10 +16,6 @@
     </div>
   </div>
 
-  
-  <div class='content'>
-    <!-- /the chart goes here -->
-  </div>
 
   <%include file="/home/about.mako"/>
   <%include file="/styles.mako"/>
@@ -30,7 +26,6 @@
   <script src="/js/deps/backbone-min.js"></script>
   <script src="/js/deps/mustache.js"></script>
 
-  <%include file="/home/about.mako"/>
-  <%include file="/styles.mako"/>
+
 </body>
 </html>
