@@ -6,7 +6,7 @@
 </head>
 <body>
   <div class='bg-image'></div>
-  <div><h4>We just got back from the playa so this site isn't really... done yet.</h4><h4>Enter the passphrase from your token and check it out!</h4></div>
+  <div><p>We just got back from the playa so this site isn't really... done yet.</p><p>Enter the passphrase from your token and check it out!</p></div>
 
   <div class="passphrase-submitter">
     <div class="passphrase-label"><h4>Enter a passphrase.</h4></div>

@@ -30,6 +30,11 @@
 <a href={{url}}>{{url}}</a>
 </script>
 
+<script type='unknown' id='bin-no-pictures-view-template'>
+  <div>Uh oh... there don't seem to be any pictures here just yet.</div>
+  <div>You or someone in your group will have to drop some off at <a href={{url}}>{{url}}</a> and then we can get down to placing them on the map.</div>
+</script>
+
 <script type='unknown' id='pb-pic-view-template'>
   <img class="medium-thumb-display" 
        src="{{medium_thumb.url}}"

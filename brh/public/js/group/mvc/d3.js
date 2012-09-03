@@ -4,9 +4,15 @@ PicChartModel = Backbone.Model.extend({
     }
 });
 
-PicLine = Backbone.Collection.extend({
+/* collects a line of pictures in the chart */
+PicLineCache = Backbone.Collection.extend({
     model:PBPic,
-    center
+    time_center:null,
+})
+
+/* displays a line of pictures */
+PicLineView = Backbone.View.extend({
+    
 })
 
 PicTimeView = Backbone.View.extend({
@@ -95,6 +101,12 @@ PicTimeView = Backbone.View.extend({
     
     render:function(){
 	pics = _.filter(this.model.pics, function(e){return e.get("datetime")});
+	if(pics.length == 0){
+	    json = curbin.toJSON();
+	    this.$el.html(
+		Mustache.render($("#bin-no-pictures-view-template").html(),json));
+	    return this;
+	}
 	pics_data = pics;
 	this.data = pics_data;
 	
