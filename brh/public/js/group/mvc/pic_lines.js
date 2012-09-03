@@ -42,6 +42,9 @@ var PicLineView = Backbone.View.extend({
 	return this;
     },
 
+    toggle:function(on){	
+	d3.select(this.el).classed("toggled-off", !on)
+    },
     assignThumbs:function(prev_idxs, next_idxs){
 
 	ofs = 0
