@@ -21,6 +21,8 @@
     <%include file="/styles.mako"/>
     <script src="/js/group/mvc/group.js"></script>
     <script src="/js/group/mvc/pic.js"></script>
+    <script src="/js/group/mvc/d3.js"></script>
+
     <script src="/js/group/init_${view}_scripts.js"></script>
       
   </body>
