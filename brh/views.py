@@ -76,9 +76,10 @@ def establish_context(request):
                               None)
         opener = urllib2.build_opener()
         f = json.load(opener.open(req))
-        return HTTPFound(request.url)
+        raise HTTPFound(request.url)
     else:
         c['ebin'] = PBSession.query(PBEBin).get(first.ebin_id).toJSON(request = request, recurse = True)
+
     return c
 
 

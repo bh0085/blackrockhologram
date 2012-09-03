@@ -35,7 +35,7 @@ var GroupView = Backbone.View.extend({
 
 
 var BinView = Backbone.View.extend({
-    tagName:"div",
+    tagName:"span",
     classNave:"bin-view",
     template:$("#bin-view-template").html(),
     picviews :[],

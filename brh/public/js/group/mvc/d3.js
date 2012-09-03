@@ -4,6 +4,11 @@ PicChartModel = Backbone.Model.extend({
     }
 });
 
+PicLine = Backbone.Collection.extend({
+    model:PBPic,
+    center
+})
+
 PicTimeView = Backbone.View.extend({
     dragging : false,
     selected:null,
@@ -16,6 +21,8 @@ PicTimeView = Backbone.View.extend({
 	this.dragging = true;
 	this.drag_screen_start = d3.mouse(this.drag_area);
 	this.drag_screen_last = d3.mouse(this.drag_area);
+	this.selectRange();
+
     },
     mouseup:function(d){
 	this.dragging = false;
@@ -58,6 +65,7 @@ PicTimeView = Backbone.View.extend({
 		.attr("y", $.proxy(function(d){return this.y(dr[1])},this) )
 		.attr("width", $.proxy(function(d){return this.x(dr[2])-this.x(dr[0])},this))
 		.attr("height",$.proxy(function(d){return this.y(dr[3])-this.y(dr[1])},this))
+	    
 		.attr("class", "selection-rect")
 		.style("opacity", .2);
 	
@@ -78,9 +86,11 @@ PicTimeView = Backbone.View.extend({
 				   && y > rect[1] && y < rect[3];
 			   }, this));
 	if(inclusion[true]) d3.selectAll(inclusion[true])
-	    .attr("r", 20);
+	    .attr("class", "scatter-dot selected");
+	
 	if(inclusion[false]) d3.selectAll(inclusion[false])
-	    .attr("r", 5);
+	    .attr("class", "scatter-dot deselected");
+
     },
     
     render:function(){
@@ -182,7 +192,7 @@ PicTimeView = Backbone.View.extend({
 	    .attr("cy", $.proxy(this.get_y,this) ) // translate y value to a pixel
 	    .attr("cx", $.proxy(this.get_x,this) ) // translate x value
 	    .attr("r", 5) // radius of circles
-	    .attr("class", "scatter-dot")
+	    .attr("class", "scatter-dot deselected")
 	    .style("opacity", 0.6)
 	    .on("click", function(d){console.log(d);}); // opacity of circle
 	return this;

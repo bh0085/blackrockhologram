@@ -6,15 +6,12 @@
 </head>
 <body>
   <div class='bg-image'></div>
-  <div><h3>We're hard at work... </h3></div>
-  <div><h4>Go out and have fun, check back on monday!</h4></div>
+  <div><h4>We just got back from the playa so this site isn't really... done yet.</h4><h4>Enter the passphrase from your token and check it out!</h4></div>
 
   <div class="passphrase-submitter">
-    <div class="passphrase-label"><h3>Enter a passphrase and head into molehill.</h3></div>
+    <div class="passphrase-label"><h4>Enter a passphrase.</h4></div>
     <div>
-    <input type="text" class="passphrase" placeholder="passphrase" width=25/>
-    </div>
-    <div>
+    <input type="text" class="passphrase input-medium" placeholder="passphrase" width=25/>
     <button class="btn btn-primary" onclick="submit_passphrase()" value="submit">submit</button>
     </div>
   </div>

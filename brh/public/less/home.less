@@ -1,3 +1,5 @@
+@boxShadowWeak: 3px 3px 5px 0px rgba(0, 0, 0, .1);
+
 body{
   box-sizing:border-box;
   padding:2em;
@@ -14,11 +16,22 @@ body{
     background-repeat: no-repeat;
     
     }
+  button.btn-primary{
+    display: inline;
+    height: 2.25em;
+    vertical-align: text-top;
+    }
+
+  input.passphrase{
+    display: inline;
+    position: relative;
+    height: 2.25em;
+    vertical-align: text-top;
+    }
   .about{
     background-color:white;
     border:1px lightgray solid;
     border-radius:3px;
-    @boxShadowWeak: 3px 3px 5px 0px rgba(0, 0, 0, .1);
     box-shadow: @boxShadowWeak;
 
     position:fixed;
@@ -38,6 +51,8 @@ body{
       }
     }
 
+  input:padding:.5em;
+
   .about.expanded{
     width:30em;
     left:50%;
@@ -54,12 +69,20 @@ body{
 
 
 .passphrase-submitter{
-  left:25%;
-  width:50%;
-  position:relative;
+  left:50%;
+  top:200px;
+  position:absolute;
+
+  text-align:center;
+
+  width:300px;
+  height:auto;
+  margin-left:-150px;
+
+  box-shadow: @boxShadowWeak;
 
   padding:2em;
   background-color:white;
-  border-radius:8px;
+  border-radius:3px;
   border:1px solid lightgray;
   }

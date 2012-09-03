@@ -22,10 +22,13 @@
  
 }
 
-.scatter-dot{
-  fill:steelblue;
+.scatter-dot.deselected{
+  fill:none;
   stroke:black;
   }
+.scatter-dot.selected{
+  fill:steelblue;
+}
 
 .selection-rect{
   fill:rgba(0, 0, 255, .25);
@@ -36,4 +39,9 @@
   path{
   stroke:lightgray;
     }
+  }
+
+body{
+  ::selection { background: transparent; }
+  ::-moz-selection { background: transparent; }
 }
