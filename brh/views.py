@@ -8,12 +8,12 @@ import urllib2, json
 
 from .models import (
     NoSuchGroupError,
-    Group, 
+    Group, User,
     PBSession, BRHSession,
     PBEBin, PBEBinMeta
     )
 
-from .utils import pictobin_helpers as ph
+from .utils import pictobin_helpers as ph, account_helpers as ah
 
 default_cache = 0;
 @view_config(route_name='home', renderer='home/home.mako', http_cache=default_cache)
@@ -31,7 +31,29 @@ def handle_pass(request):
             g = Group(passphrase = p)
             BRHSession.add(g)
 
+        
     return {"link":"/groups/{0}".format(p)}
+
+
+@view_config(route_name='handle_email', renderer = 'json',http_cache=default_cache)
+def handle_email(request):
+    em = request.params['email']
+    existing_user = BRHSession.query(User)\
+        .filter(User.email == em)\
+        .first()
+    if not existing_user:
+        with transaction.manager:
+            u = User(email = em,
+                     group = request.group)
+        
+            BRHSession.add(u)
+            
+        existing_user = BRHSession.query(User)\
+            .filter(User.email == em)\
+            .first()
+    
+    ah.mailConfirmation(existing_user,request)
+    return {"user":existing_user.toJSON()}
 
 @view_config(route_name='group_main', renderer ='group_main.mako', http_cache=default_cache)
 def group_main(request):

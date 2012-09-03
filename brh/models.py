@@ -131,7 +131,13 @@ class Coordinate(Base_BRH):
     map_y = Column(Float, index = True, nullable = False)
     
     
+class User(Base_BRH):
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key = True)
+    groupid = Column(Integer, ForeignKey('group.id'),nullable = False)
+    email = Column(Unicode, nullable =True)
 
+User.group = relation(Group, backref='users')
 
 from pyramid.security import (
     ALL_PERMISSIONS,

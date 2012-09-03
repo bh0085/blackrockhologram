@@ -12,7 +12,7 @@ from pyramid.paster import (
 from ..models import (
     PBSession, BRHSession,
     PBPicture, PBEBin,
-    Picture, Group, Place, PlaceCoordinate, PictureCoordinate, Coordinate,
+    Picture, Group, Place, PlaceCoordinate, PictureCoordinate, Coordinate, User,
     Base_PB, Base_BRH
     )
 

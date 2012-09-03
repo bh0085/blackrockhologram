@@ -4760,13 +4760,13 @@ a.badge:hover {
 .affix {
   position: fixed;
 }
-body {
+body.home {
   box-sizing: border-box;
   padding: 2em;
   padding-top: .5em;
   input: padding:.5em;
 }
-body .bg-image {
+body.home .bg-image {
   opacity: .15;
   left: 0px;
   top: 0px;
@@ -4777,18 +4777,18 @@ body .bg-image {
   background-position: center center;
   background-repeat: no-repeat;
 }
-body button.btn-primary {
+body.home button.btn-primary {
   display: inline;
   height: 2.25em;
   vertical-align: text-top;
 }
-body input.passphrase {
+body.home input.passphrase {
   display: inline;
   position: relative;
   height: 2.25em;
   vertical-align: text-top;
 }
-body .about {
+body.home .about {
   background-color: white;
   border: 1px lightgray solid;
   border-radius: 3px;
@@ -4801,22 +4801,22 @@ body .about {
   margin-bottom: 2em;
   padding: 1.5em;
 }
-body .about .expanded-content {
+body.home .about .expanded-content {
   display: none;
 }
-body .about .compressed-content {
+body.home .about .compressed-content {
   display: block;
 }
-body .about.expanded {
+body.home .about.expanded {
   width: 30em;
   left: 50%;
   margin-left: -17em;
   margin-right: 0em;
 }
-body .about.expanded .compressed-content {
+body.home .about.expanded .compressed-content {
   display: none;
 }
-body .about.expanded .expanded-content {
+body.home .about.expanded .expanded-content {
   display: block;
 }
 .passphrase-submitter {
@@ -4846,7 +4846,7 @@ body .about.expanded .expanded-content {
   display: block;
 }
 .info-display {
-  font-sinze: .75em;
+  font-size: .75em;
   color: white;
   list-style: none;
 }
@@ -4906,4 +4906,33 @@ body ::selection {
 }
 body ::-moz-selection {
   background: transparent;
+}
+body {
+  padding: 1.5em;
+}
+body button.btn-primary {
+  display: inline;
+  height: 2.25em;
+  vertical-align: text-top;
+}
+body input.email {
+  display: inline;
+  position: relative;
+  height: 2.25em;
+  vertical-align: text-top;
+}
+body div.notification-trigger {
+  padding: .75em;
+  background-color: whitesmoke;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.1);
+  margin: .75em;
+  border: 1px solid lightgray;
+  text-align: left;
+}
+body div.notification-trigger li {
+  margin-left: 1.5em;
+  list-style: empty;
+}
+body .content-row {
+  text-align: center;
 }
