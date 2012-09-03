@@ -107,10 +107,22 @@ PicTimeView = Backbone.View.extend({
 	if(inclusion[false]) d3.selectAll(inclusion[false])
 	    .attr("class", "scatter-dot deselected");
     },
+
+    
+    
+    
     refreshSelectedThumbs:function(){
 	var dr = this.selection_rect_data;
 	_.each(this.thumblines_before,
 	       function(tl,i){
+
+		   in_selection = tl.user_data > dr[1] && tl.user_data < dr[3];
+		   if (!in_selection){
+		       tl.toggle(false);
+		       return;
+		   } else{
+		       tl.toggle(true);
+		   }
 		   var next_thumb = _.find(tl.pics.models,
 				       function(e){
 					   return this.get_x(e) > dr[0];
@@ -132,23 +144,28 @@ PicTimeView = Backbone.View.extend({
 				    Math.max(0,prev_i+1));
 		   nrange = _.range(Math.min(tl.pics.length, next_i),
 				    Math.min(tl.pics.length, next_i +this.n_thumbs_in));
-		   
-
 		   tl.assignThumbs(prange, nrange);
-		   
-
 		   d3.select(tl.el)
 		       .attr('transform', 'translate('+
 			     this.sx(this.selection_rect_data[0])+',' +
 			     (this.sy(tl.user_data)+this.thumbs_line_offset) + ')');
-
 	       },
 	       this
 	      )
 	_.each(this.thumblines_after,
+
+	       
 	       function(tl,i){
+
+		   in_selection = tl.user_data > dr[1] && tl.user_data < dr[3];
+		   if (!in_selection){
+		       tl.toggle(false);
+		       return;
+		   } else{
+		       tl.toggle(true);
+		   }
 		   var next_thumb = _.find(tl.pics.models,
-				       function(e){
+					   function(e){
 					   return this.get_x(e) > dr[2];
 				       },this);
 		   if (next_thumb){
