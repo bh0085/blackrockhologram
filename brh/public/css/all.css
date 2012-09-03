@@ -4891,7 +4891,7 @@ body.home .about.expanded .expanded-content {
   display: none;
 }
 .selection-line.before .thumb.next {
-  outline: 5px solid steelblue;
+  outline: 2px solid #0088cc;
 }
 .selection-line.before .thumb.prev {
   outline: none;
@@ -4900,7 +4900,7 @@ body.home .about.expanded .expanded-content {
   outline: none;
 }
 .selection-line.after .thumb.prev {
-  outline: 5px solid steelblue;
+  outline: 2px solid #0088cc;
 }
 .scatter-dot.deselected {
   fill: none;

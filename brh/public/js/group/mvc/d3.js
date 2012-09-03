@@ -26,7 +26,8 @@ PicTimeView = Backbone.View.extend({
     scattered:null,
     n_thumbs_in:3,
     n_thumbs_out:2,
-    thumbs_line_offset:-80,
+    thumbs_before_line_offset:-60,
+    thumbs_after_line_offset:60,
     
     initialize:function(){
 	time_chart_view = this;
@@ -96,11 +97,12 @@ PicTimeView = Backbone.View.extend({
 	var dr =  this.selection_rect_data;
 	inclusion = _.groupBy(this.scattered[0],
 			   $.proxy(function(e,i){
-			       var x = this.data[i];
-			       var y = this.data[i];
+			       var x =this.get_x( this.data[i]);
+			       var y =this.get_y(this.data[i]);
 			       return x > dr[0] && x < dr[2]
 				   && y > dr[1] && y < dr[3];
 			   }, this));
+	
 	if(inclusion[true]) d3.selectAll(inclusion[true])
 	    .attr("class", "scatter-dot selected");
 	
@@ -113,91 +115,56 @@ PicTimeView = Backbone.View.extend({
     
     refreshSelectedThumbs:function(){
 	var dr = this.selection_rect_data;
-	_.each(this.thumblines_before,
-	       function(tl,i){
+	
+	line_bounds =
+	    _.each(this.thumblines_before, function(tl,i){
+		starts_selection = _.find(tl.pics.models,
+					  function(e){
+					      return this.get_x(e) > dr[0];
+					  },this);
+		ends_selection = _.find(tl.pics.models,
+					function(e){
+					    return this.get_x(e) > dr[2];
+					},this);
+		sbounds = [tl.pics.models.indexOf(starts_selection),
+			   tl.pics.models.indexOf(ends_selection)];
+		
+		grps = _.groupBy(_.range(tl.pics.models.length),
+				 function(e,i){
+				     if (i < sbounds[0]){
+					 return 'before';
+				     } else if( i < sbounds[1]){
+					 return 'between';
+				     } else {
+					 return 'after';
+				     }
+				 });
+		if (!grps.before) grps.before = [];
+		if (!grps.after) grps.after = [];
+		if (!grps.between) grps.between = [];
 
-		   in_selection = tl.user_data > dr[1] && tl.user_data < dr[3];
-		   if (!in_selection){
-		       tl.toggle(false);
-		       return;
-		   } else{
-		       tl.toggle(true);
-		   }
-		   var next_thumb = _.find(tl.pics.models,
-				       function(e){
-					   return this.get_x(e) > dr[0];
-				       },this);
-		   if (next_thumb){
-		       next_i = tl.pics.indexOf(next_thumb);
-		   } else{
-		       next_i = tl.pics.length;
-		   }
-		   if(next_i >0){
-		       prev_i = next_i - 1;
-		       prev_thumb = tl.pics.models[prev_i];
-		   } else {
-		       prev_i = -1;
-		       prev_thumb = null;
-		   }
+		b_prev = grps.before.slice(-1* this.n_thumbs_out,grps.before.length)
+		b_next = grps.between.slice(0,Math.min(this.n_thumbs_in, Math.floor(grps.between.length/2)))
+		a_prev_slice_start = Math.max(grps.between.length - this.n_thumbs_in,
+					      b_next.length);
+		a_prev = grps.between.slice(a_prev_slice_start,grps.between.length);
+		a_next = grps.after.slice(0,Math.min(grps.after.length, this.n_thumbs_out));
+		
+		this.thumblines_after[i].assignThumbs(a_prev,a_next);
+		this.thumblines_before[i].assignThumbs(b_prev,b_next);
+		
+		d3.select(this.thumblines_before[i].el)
+		    .attr('transform', 'translate('+
+			  this.sx(this.selection_rect_data[0])+',' +
+			  (this.sy(tl.user_data)+this.thumbs_before_line_offset) + ')');
+		d3.select(this.thumblines_after[i].el)
+		    .attr('transform', 'translate('+
+			  this.sx(this.selection_rect_data[2])+',' +
+			  (this.sy(tl.user_data) +this.thumbs_after_line_offset)+ ')');
 
-		   prange = _.range(Math.max(0,prev_i+1-this.n_thumbs_out),
-				    Math.max(0,prev_i+1));
-		   nrange = _.range(Math.min(tl.pics.length, next_i),
-				    Math.min(tl.pics.length, next_i +this.n_thumbs_in));
-		   tl.assignThumbs(prange, nrange);
-		   d3.select(tl.el)
-		       .attr('transform', 'translate('+
-			     this.sx(this.selection_rect_data[0])+',' +
-			     (this.sy(tl.user_data)+this.thumbs_line_offset) + ')');
-	       },
-	       this
-	      )
-	_.each(this.thumblines_after,
-
-	       
-	       function(tl,i){
-
-		   in_selection = tl.user_data > dr[1] && tl.user_data < dr[3];
-		   if (!in_selection){
-		       tl.toggle(false);
-		       return;
-		   } else{
-		       tl.toggle(true);
-		   }
-		   var next_thumb = _.find(tl.pics.models,
-					   function(e){
-					   return this.get_x(e) > dr[2];
-				       },this);
-		   if (next_thumb){
-		       next_i = tl.pics.indexOf(next_thumb);
-		   } else{
-		       next_i = tl.pics.length;
-		   }
-		   if(next_i >0){
-		       prev_i = next_i - 1;
-		       prev_thumb = tl.pics.models[prev_i];
-		   } else {
-		       prev_i = -1;
-		       prev_thumb = null;
-		   }
+	    }, this);
 
 
-		   prange = _.range(Math.max(0,prev_i+1-this.n_thumbs_in),
-				    Math.max(0,prev_i+1));
-		   nrange = _.range(Math.min(tl.pics.length, next_i),
-				    Math.min(tl.pics.length, next_i +this.n_thumbs_out));
-		  
-		   tl.assignThumbs(prange, nrange);
-		   
-
-		   d3.select(tl.el)
-		       .attr('transform', 'translate('+
-			     this.sx(this.selection_rect_data[2])+',' +
-			     (this.sy(tl.user_data) +this.thumbs_line_offset)+ ')');
-
-	       },
-	       this
-	      )
     },
     selectRange:function(){
 	var xs, ys, included, rect, c;

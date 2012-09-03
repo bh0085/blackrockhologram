@@ -68,7 +68,7 @@ var PicLineView = Backbone.View.extend({
 		       ofs+=this.pthumbs[i].actual_width() + 15;
 		       d3.select(this.pthumbs[i].el)
 			   .attr('transform', 'translate('+
-				 (-1 * ofs)+',' + 0 + ')')
+				 (-1 * ofs)+',' + (-1*this.pthumbs[i].actual_height()/2) + ')')
 			   .attr('class', 'prev thumb');
 
 		   }
@@ -95,7 +95,7 @@ var PicLineView = Backbone.View.extend({
 		       this.nthumbs[i].render();
 		       d3.select(this.nthumbs[i].el)
 			   .attr('transform', 'translate('+
-				 ( ofs)+',' + 0 + ')')
+				 ( ofs)+',' + (-1*this.nthumbs[i].actual_height()/2) + ')')
 			   .attr('class', 'next thumb');
 		       ofs+=this.nthumbs[i].actual_width() + 15;
 		   }
