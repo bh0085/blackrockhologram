@@ -4857,6 +4857,16 @@ body.home .about.expanded .expanded-content {
   color: black;
   list-style: none;
 }
+.pb-pic-view .close-container {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  margin-right: -1.5em;
+  margin-top: -2em;
+  border-radius: 3px;
+  text-size: 1.5em;
+  text-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.1);
+}
 .steps {
   box-sizing: border-box;
   width: 500px;
@@ -4960,6 +4970,7 @@ body .content-row {
 }
 .content .chart-container {
   float: left;
+  margin-right: 1.5em;
 }
 .content input.place {
   display: inline;
@@ -4969,4 +4980,18 @@ body .content-row {
 }
 .content .nodisplay {
   display: none;
+}
+.content .selection-header {
+  display: inline-block;
+  min-width: 150px;
+  max-width: 250px;
+  position: relative;
+}
+.content .selection-header .selection-info-container {
+  position: relative;
+  display: block;
+}
+.content .selection-header .selection-labeller-container {
+  position: relative;
+  display: block;
 }

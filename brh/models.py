@@ -111,8 +111,13 @@ class Picture(Base_BRH):
 class Place(Base_BRH):
     __tablename__ = 'place'
     id = Column(Integer, primary_key = True)
-    group = Column(Integer, ForeignKey('group.id'), index = True, nullable = False)
+    groupid = Column(Integer, ForeignKey('group.id'), index = True, nullable = False)
     name = Column(Unicode, nullable = False, index = True)
+
+class PicturePlace(Base_BRH):
+    __tablename__ = 'pictureplace'
+    placeid = Column(Integer, ForeignKey('place.id'),index = True, primary_key = True)
+    pictureid = Column(Integer, ForeignKey('picture.id'), index = True, primary_key = True)
     
 class PlaceCoordinate(Base_BRH):
     __tablename__ = 'placecoordinate'
@@ -137,6 +142,13 @@ class User(Base_BRH):
     groupid = Column(Integer, ForeignKey('group.id'),nullable = False)
     email = Column(Unicode, nullable =True)
 
+Place.group =relation(Group, backref ='places')
+PlaceCoordinate.coordinate  = relation(Coordinate)
+PlaceCoordinate.place = relation(Place, backref = 'coordinates');
+PicturePlace.picture = relation(Picture, backref ='places');
+PicturePlace.place = relation(Place, backref = 'pictures');
+PictureCoordinate.coordinate = relation(Coordinate)
+PictureCoordinate.picture = relation(Picture, backref = 'coordinates');
 User.group = relation(Group, backref='users')
 
 from pyramid.security import (

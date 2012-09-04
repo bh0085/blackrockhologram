@@ -20,10 +20,14 @@ var SelectionGalleryView = Backbone.View.extend({
     },
     addPic:function(pbpic){
 	console.log("adding ", pbpic);
-	v = new PBPicView({model:pbpic}).render();
+	v = new PBPicView({model:pbpic}).render()
+	v.on("closed",this.viewClosed,this);
 	this.viewsById[v.model.get('id')] = v;
 	this.$('.thumbs').append(v.$el);
 	this.changed();
+    },
+    viewClosed:function(view){
+	this.scache.remove(view.model);	
     },
     removePic:function(pbpic){
 	console.log("removing");

@@ -36,6 +36,9 @@
 </script>
 
 <script type='unknown' id='pb-pic-view-template'>
+  <div class="close-container">
+  <button type="button" class="close">×</button>
+  </div>
   <img class="medium-thumb-display" 
        src="{{medium_thumb.url}}"
        style="		width:{{medium_thumb.width}}px;

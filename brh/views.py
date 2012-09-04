@@ -55,6 +55,29 @@ def handle_email(request):
     ah.mailConfirmation(existing_user,request)
     return {"user":existing_user.toJSON()}
 
+
+@view_config(route_name='handle_place', renderer = 'json',http_cache=default_cache)
+def handle_email(request):
+    picids = request.params[pb_picids]
+    group= request.group;
+
+    existing_user = BRHSession.query(User)\
+        .filter(User.email == em)\
+        .first()
+    if not existing_user:
+        with transaction.manager:
+            u = User(email = em,
+                     group = request.group)
+        
+            BRHSession.add(u)
+            
+        existing_user = BRHSession.query(User)\
+            .filter(User.email == em)\
+            .first()
+    
+    ah.mailConfirmation(existing_user,request)
+    return {"user":existing_user.toJSON()}
+
 @view_config(route_name='group_main', renderer ='group_main.mako', http_cache=default_cache)
 def group_main(request):
     return {'sessionInfo':establish_context(request),
