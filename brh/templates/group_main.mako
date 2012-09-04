@@ -11,6 +11,7 @@
     <%include file="/content/${view}.mako" />
     
     <%include file="/bbtemplates/group.mako"/>
+    <%include file="/bbtemplates/annotation.mako"/>
     <!-- basic includes to get things moving!-->
     <script type="text/javascript" src="/js/deps/jquery-1.7.2.min.js"></script>
     <script src="/js/deps/underscore-min.js"></script>
@@ -22,6 +23,7 @@
     <script src="/js/group/mvc/group.js"></script>
     <script src="/js/group/mvc/pic.js"></script>
     <script src="/js/group/mvc/pic_lines.js"></script>
+    <script src="/js/group/mvc/annotation.js"></script>
     <script src="/js/group/mvc/d3.js"></script>
 
     <script src="/js/group/init_${view}_scripts.js"></script>

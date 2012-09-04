@@ -38,11 +38,9 @@
 <script type='unknown' id='pb-pic-view-template'>
   <img class="medium-thumb-display" 
        src="{{medium_thumb.url}}"
-       style="left:{{medium_thumb.left}}px;
-		top:{{medium_thumb.top}}px;
-		width:{{medium_thumb.width}}px;
+       style="		width:{{medium_thumb.width}}px;
 		height:{{medium_thumb.height}}px;" ></img>
-  <ul>
+  <ul class="info">
   <li class="name-display info-display">{{creator_name}} - {{name}}</li>
   <li class="date-display info-display">{{date_string}}, {{String(datetime)}}</li>
   </ul>

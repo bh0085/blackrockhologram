@@ -49,29 +49,33 @@ var PicLineView = Backbone.View.extend({
 
 	ofs = 0
 	_.each(prev_idxs,
+	     
 	       function(e,i){
-		   m =this.pics.models[e];
+		   var do_offset = false;
+		   var m =this.pics.models[e];
 		   if (!this.pthumbs[i] ||(this.pthumbs[i].model !=m)){
 		       if(i >= this.pthumbs.length ){
 			   this.pthumbs[i] = 
 			       new LineThumbView({
 				   model:this.pics.models[e],
-				   scale:Math.pow(.5,i+1)
+				   scale:.75*Math.pow(.5,i)
 			       });
 		       } else {
 			   this.pthumbs[i].model = m;
 		       }
-
-		       
-
+		       do_offset=true;
 		       this.pthumbs[i].render();
-		       ofs+=this.pthumbs[i].actual_width() + 15;
+		   }
+		       
+		   ofs+=this.pthumbs[i].actual_width() + 15;
+		   if (do_offset){
 		       d3.select(this.pthumbs[i].el)
 			   .attr('transform', 'translate('+
 				 (-1 * ofs)+',' + (-1*this.pthumbs[i].actual_height()/2) + ')')
 			   .attr('class', 'prev thumb');
-
 		   }
+
+		   
 	       }, this
 	      );
 
@@ -79,26 +83,30 @@ var PicLineView = Backbone.View.extend({
 	ofs = 0;
 	_.each(next_idxs,
 	       function(e,i){
+		   do_offset=false;
 		   m =this.pics.models[e];
 		   if (!this.nthumbs[i] ||(this.nthumbs[i].model !=m)){
 		       if(i >= this.nthumbs.length ){
 			   this.nthumbs[i] = 
 			       new LineThumbView({
 				   model:this.pics.models[e],
-				   scale:Math.pow(.5,i+1)
+				   scale:.75*Math.pow(.5,i)
 			       });
 
 		       } else {
 			   this.nthumbs[i].model = m;
 		       }
-
 		       this.nthumbs[i].render();
+		       do_offset = true;
+		   }
+		   if (do_offset){
 		       d3.select(this.nthumbs[i].el)
 			   .attr('transform', 'translate('+
 				 ( ofs)+',' + (-1*this.nthumbs[i].actual_height()/2) + ')')
 			   .attr('class', 'next thumb');
-		       ofs+=this.nthumbs[i].actual_width() + 15;
 		   }
+		   ofs+=this.nthumbs[i].actual_width() + 15;
+		   
 	       }, this
 	      );
 

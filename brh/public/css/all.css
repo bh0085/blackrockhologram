@@ -4838,16 +4838,23 @@ body.home .about.expanded .expanded-content {
   position: relative;
   margin: 1em;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  width: 150px;
-  height: 150px;
+  vertical-align: middle;
 }
 .pb-pic-view img {
-  position: absolute;
+  position: relative;
   display: block;
 }
-.info-display {
+.pb-pic-view ul.info {
+  position: relative;
+  display: block;
+  margin-left: 0px;
+}
+.pb-pic-view ul.info .info-display {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: .75em;
-  color: white;
+  color: black;
   list-style: none;
 }
 .steps {
@@ -4891,7 +4898,7 @@ body.home .about.expanded .expanded-content {
   display: none;
 }
 .selection-line.before .thumb.next {
-  outline: 2px solid #0088cc;
+  outline: 5px solid #0088cc;
 }
 .selection-line.before .thumb.prev {
   outline: none;
@@ -4900,7 +4907,7 @@ body.home .about.expanded .expanded-content {
   outline: none;
 }
 .selection-line.after .thumb.prev {
-  outline: 2px solid #0088cc;
+  outline: 5px solid #0088cc;
 }
 .scatter-dot.deselected {
   fill: none;
@@ -4950,4 +4957,16 @@ body div.notification-trigger li {
 }
 body .content-row {
   text-align: center;
+}
+.content .chart-container {
+  float: left;
+}
+.content input.place {
+  display: inline;
+  position: relative;
+  height: 2.25em;
+  vertical-align: text-top;
+}
+.content .nodisplay {
+  display: none;
 }
