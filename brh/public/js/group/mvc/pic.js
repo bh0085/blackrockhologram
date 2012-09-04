@@ -61,6 +61,9 @@ var PBPicView = Backbone.View.extend({
     template: $("#pb-pic-view-template").html(),
     tagName:"div",
     className:"pb-pic-view",
+    events:{
+	"click .close":"doClose",
+    },
     render:function(){
 	var json = this.model.toJSON();
 	json.name = json.name?json.name:"untitled";
@@ -75,6 +78,10 @@ var PBPicView = Backbone.View.extend({
 	} else{ json.medium_thumb = {};}
 	this.$el.html(Mustache.render(this.template, json));
 	return this;
+    },
+    doClose:function(){
+	this.trigger("closed", this);
+	console.log("closing!");
     }
 })
 

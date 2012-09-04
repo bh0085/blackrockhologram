@@ -24,10 +24,10 @@ PicTimeView = Backbone.View.extend({
     drag_area:null,
     data:null,
     scattered:null,
-    n_thumbs_in:3,
+    n_thumbs_in:2,
     n_thumbs_out:2,
-    thumbs_before_line_offset:-60,
-    thumbs_after_line_offset:60,
+    thumbs_before_line_offset:-80,
+    thumbs_after_line_offset:80,
     
     initialize:function(){
 	time_chart_view = this;
@@ -262,9 +262,9 @@ PicTimeView = Backbone.View.extend({
 	
 
 	// size and margins for the chart
-	var margin = {top: 75, right: 25, bottom: 75, left: 100}
+	var margin = {top: 100, right: 25, bottom: 100, left: 100}
 	, width =400
-	, height =200 * this.yunq.length;
+	, height =150 * this.yunq.length;
 
 	// x and y scales, I've used linear here but there are other options
 	// the scales translate data values to pixel values for you
