@@ -144,6 +144,7 @@ class User(Base_BRH):
     email = Column(Unicode, nullable =True)
 
 Place.group =relation(Group, backref ='places')
+Picture.group = relation(Group, backref = "pictures")
 PlaceCoordinate.coordinate  = relation(Coordinate)
 PlaceCoordinate.place = relation(Place, backref = 'coordinates');
 PicturePlace.picture = relation(Picture, backref ='places');

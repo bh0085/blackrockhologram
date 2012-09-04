@@ -8,7 +8,7 @@ import urllib2, json
 
 from .models import (
     NoSuchGroupError,
-    Group, User,
+    Group, User, Picture, Place, PicturePlace,
     PBSession, BRHSession,
     PBEBin, PBEBinMeta
     )
@@ -56,36 +56,58 @@ def handle_email(request):
 
 @view_config(route_name='handle_place', renderer = 'json',http_cache=default_cache)
 def handle_place(request):
-    picids = request.params[pb_picids]
+    import json
+    picids = json.loads(request.params["pb_picids_json"])
+    name = request.params['name']
     group= request.group;
     
     picturesJSON=[]
-    placeJSON
+    placeJSON=None
 
-    place = BRHSession.query(Place.filter_by)
-
+    place = BRHSession.query(Place)\
+        .filter(Place.groupid == group.id)\
+        .filter(Place.name == name)\
+        .first()
+    if not place:
+        place =Place(group = group,
+                     name = name)
+        BRHSession.add(place)
+        BRHSession.flush()
+                     
     for e in picids:
-        existing_picture = Picture.filter(Picture.groupid == group.id)\
+        existing_picture = BRHSession.query(Picture)\
+            .filter(Picture.groupid == group.id)\
             .filter(Picture.pb_id == e)\
             .first()
         
         if not existing_picture:
-            with transaction.manager:
-                p = Picture(group = group,
+            existing_picture = Picture(group = group,
                             pb_id = e)
                 
-                BRHSession.add(p)
-                
-            existing_picture = BRHSession.query(User)\
-                .filter(User.email == em)\
-                .first()
+            BRHSession.add(existing_picture)
+            BRHSession.flush()
 
-            
-    raise Exception()
+        if not BRHSession.query(PicturePlace)\
+                .get((place.id,existing_picture.id)):
+            join =  PicturePlace(place = place, 
+                                 picture = existing_picture)
+            BRHSession.add(join)
+            BRHSession.flush()
+                             
+
+    place = BRHSession.query(Place)\
+        .filter(Place.groupid == group.id)\
+        .filter(Place.name == name)\
+        .first()
+    pj = place.toJSON()
+    pj['pictures'] = [e.picture.toJSON(request = request) 
+                      for e in place.pictures]
+
+    import transaction
+    transaction.commit()
     
-        
-    return {"place":placeJSON,
-            "place_pictures":ppJSON}
+    print "returning", pj 
+    return {"place":pj}
 
 @view_config(route_name='group_main', renderer ='group_main.mako', http_cache=default_cache)
 def group_main(request):

@@ -1,9 +1,9 @@
 <script type="unknown" id='selection-gallery-view-template'>
   <span class="selection-header">
-    <span class="selection-info-container">
+    <span class="selection-info-container">Selected
       <span class="selection-count-display">0</span> pics.
       <span class="selection-more-info nodisplay">
-	Taken by <span class="selection-creator-count-display"></span> contributors from <span class="selection-time-start-display">2pm Tuesday</span> to <span class="selection-time-end-display">3pm Wednesday</span>.
+	taken by <span class="selection-creator-count-display"></span> contributors from <span class="selection-time-start-display">2pm Tuesday</span> to <span class="selection-time-end-display">3pm Wednesday</span>.
       </span>
     </span>
     <span class="selection-labeller-container">
@@ -25,7 +25,12 @@
 
 
 <script type="unknown" id="place-view-template">
-  <span class="nodisplay"><a href=#>attach<a></span>
+  <span class="place-view-colored"
+	style="background-color:{{med_color}};
+	       color:white;
+	       border-color:white;">
+  <span class="name-display">{{name}}</span>, <span class="count-display">{{count}} photos</span>
+  </span>
 </script>
 
 <script type="unknown" id="place-gallery-view-template">

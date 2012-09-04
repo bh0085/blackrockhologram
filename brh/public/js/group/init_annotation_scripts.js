@@ -16,6 +16,7 @@ $(function(){
     sgallery = new SelectionGalleryView()
     sgallery.render().$el.appendTo($(".widget.selection-gallery-container"))
     pgv = new PlaceGalleryView();
+    pgv.render().$el.appendTo($(".place-gallery-container"));
 });
 
 
@@ -25,7 +26,7 @@ Place = Backbone.Model.extend({
 	groupid:null,
 	coordinates:null,
 	pictures:null,
-    }
+    } 
 });
 
 PlaceCoordinate = Backbone.Model.extend({
@@ -37,12 +38,19 @@ PlaceCache = Backbone.Collection.extend({
     model:Place
 })
 PlaceView =Backbone.View.extend({
-    template:$("#place-view-template"),
+    template:$("#place-view-template").html(),
     className:"place-view",
     tagName:"div",
 
     render:function(){
-	var json = {};
+	var json = this.model.toJSON();
+	json.count = this.model.get("pictures").length;
+	cols = _.map(_.range(3) ,function(e){return Math.floor(Math.random()*128)+64});
+
+	json.med_color = 'rgba('+cols.join(', ')+',1)';
+	json.light_color =  'rgba('+cols_light.join(', ')+',1)';
+	json.dark_color =  'rgba('+cols_dark.join(', ')+',1)';
+			  
 	this.$el.html(Mustache.render(this.template,json));
 	return this;
     }
@@ -50,15 +58,17 @@ PlaceView =Backbone.View.extend({
 PlaceGalleryView = Backbone.View.extend({
     "tagName":"div",
     className:"place-gallery-view",
-    template:$("#place-gallery-view-template"),
+    template:$("#place-gallery-view-template").html(),
     initialize:function(){
 	this.pcache = new PlaceCache([]);
 	this.pcache.on("add",this.addPlace, this);
 	this.pcache.on("remove",this.removePlace, this);
+	this.viewsById = {};
     },
     addPlace:function(place){
-	this.viewsById[place.get("cid")]
-	    = new PlaceView({"model":place});
+	v = new PlaceView({"model":place});
+	this.viewsById[place.get("cid")] = v;
+	v.render().$el.appendTo(this.$el);
     },
     removePlace:function(place){
 	this.viewsById[place.get("cid")].$el.remove();
@@ -73,12 +83,18 @@ PlaceGalleryView = Backbone.View.extend({
 });
 
 function submit_place(){
-    selected_ids = _.map(scache.models,
+    if ($("input.place").val() == ''){
+	return;
+    }
+
+    selected_ids = _.map(sgallery.scache.models,
 			 function(e){
 			     return e.id;
 			 });
+    
     data = {
-	pb_picids:selected_ids
+	pb_picids_json:JSON.stringify(selected_ids),
+	name:$("input.place").val()
     };
     $.getJSON("/handleplace/"+curgroup.get("passphrase"),
 	      data,
@@ -88,14 +104,12 @@ function submit_place(){
 }
 
 function place_submitted(data){
-    new_places = data.places;
-    curuser = data.user;
+    new_places = data.place;
+    place_pictures = data.place_pictures;
     _.each(data,function(e){
 	pgv.pcache.add(new Place(e));
     },this);
-    $(".email-submitter").append(
-	$("<div>").text("It worked! We've sent you a confirmation email and you'll be hearing from us occasionally")
-    );
-    
+
+    console.log("SUBMITTED!");
 }
 

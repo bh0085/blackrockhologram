@@ -6,6 +6,6 @@
   </div>
   <div class="widget selection-gallery-container">
   </div>
-  
+  <div class="widget place-gallery-container"></div>
 </div>
 
