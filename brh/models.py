@@ -107,6 +107,7 @@ class Picture(Base_BRH):
     __tablename__ = 'picture'
     id = Column(Integer, primary_key = True)
     pb_id = Column(Integer, nullable = False, index = True)
+    groupid = Column(Integer, ForeignKey('group.id'), nullable = False, index = True)
 
 class Place(Base_BRH):
     __tablename__ = 'place'

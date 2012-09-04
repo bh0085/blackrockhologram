@@ -70,7 +70,7 @@ function submit_place(){
 			     return e.id;
 			 });
     data = {
-	pb_pic_ids:selected_ids
+	pb_picids:selected_ids
     };
     $.getJSON("/handleplace/"+curgroup.get("passphrase"),
 	      data,
