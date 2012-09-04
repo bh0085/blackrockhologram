@@ -12,5 +12,11 @@ $(function(){
     pchart = new PicChartModel({pics:cache});
     pview = new PicTimeView({model:pchart});
     pview.render().$el.appendTo($('.chart-container'));
+
+    sgallery = new SelectionGalleryView()
+    sgallery.render().$el.appendTo($(".widget.selection-gallery-container"))
+    
 });
+
+
 

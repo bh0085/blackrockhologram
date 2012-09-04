@@ -118,6 +118,15 @@ PicTimeView = Backbone.View.extend({
 	
 	line_bounds =
 	    _.each(this.thumblines_before, function(tl,i){
+
+		if(!(tl.user_data > dr[1] && tl.user_data < dr[3])){
+		    this.thumblines_after[i].toggle(false);
+		    this.thumblines_before[i].toggle(false);
+		    return
+		}
+		
+		this.thumblines_after[i].toggle(true);
+		this.thumblines_before[i].toggle(true);
 		starts_selection = _.find(tl.pics.models,
 					  function(e){
 					      return this.get_x(e) > dr[0];
@@ -126,8 +135,12 @@ PicTimeView = Backbone.View.extend({
 					function(e){
 					    return this.get_x(e) > dr[2];
 					},this);
+		
 		sbounds = [tl.pics.models.indexOf(starts_selection),
 			   tl.pics.models.indexOf(ends_selection)];
+		if(sbounds[1] == -1){
+		    sbounds[1] = tl.pics.models.length;
+		}
 		
 		grps = _.groupBy(_.range(tl.pics.models.length),
 				 function(e,i){
@@ -153,6 +166,7 @@ PicTimeView = Backbone.View.extend({
 		this.thumblines_after[i].assignThumbs(a_prev,a_next);
 		this.thumblines_before[i].assignThumbs(b_prev,b_next);
 		
+		
 		d3.select(this.thumblines_before[i].el)
 		    .attr('transform', 'translate('+
 			  this.sx(this.selection_rect_data[0])+',' +
@@ -166,10 +180,35 @@ PicTimeView = Backbone.View.extend({
 
 
     },
+
+
+    computeSelectedPics:function(){
+
+	var dr =  this.selection_rect_data;
+	_.each(this.data,
+	       function(e,i){
+		   
+		   var selected, was_selected;
+		   var x =this.get_x(e);
+		   var y =this.get_y(e);
+		   selected =  x > dr[0] && x < dr[2]
+		       && y > dr[1] && y < dr[3];
+		   was_selected=sgallery.scache.get(e.get('id'))!=null;
+
+		   if( selected && ! was_selected){
+		       sgallery.scache.add(e);
+		   } else if( !selected && was_selected){
+		       sgallery.scache.remove(e);
+		   } else{
+		       //do nothing;
+		   }
+	       },this);
+	
+    },
     selectRange:function(){
 	var xs, ys, included, rect, c;
 	xs = [(this.drag_screen_start[0]),
-		 (this.drag_screen_last[0])];
+	      (this.drag_screen_last[0])];
 	ys = [(this.drag_screen_start[1]),
 	      (this.drag_screen_last[1])];
 	rect = [d3.min(xs),d3.min(ys),
@@ -183,6 +222,7 @@ PicTimeView = Backbone.View.extend({
 	this.renderSelectionRect();
 	this.colorSelectedPoints();
 	this.refreshSelectedThumbs();
+	this.computeSelectedPics();
 
     },
     render:function(){
@@ -198,40 +238,62 @@ PicTimeView = Backbone.View.extend({
 	
 	// data that you want to plot, I've used separate arrays for x and y values
 	xdata = _.map(pics, function(e){return e.get("datetime")});
-	ydata = _.map(pics, function(e){return e.get('creatorid')});
+	
+	// draw the y axis
+	ydata = 
+	    _.uniq(
+		_.map(
+		    this.data,
+		    function(e){
+			return {id:e.get("creatorid"),
+				name:e.get("creator_name")[0]?e.get("creator_name")[0]:"anonymous"};
+		    }),
+		false,
+		function(e){
+		    return e.id;
+		}
+	    );
+	this.yunq = _.sortBy(
+	    _.map(ydata,function(e){
+		return e.id
+	    }),function(e){return e});
+	    
+
+	
 
 	// size and margins for the chart
-	var margin = {top: 0, right: 0, bottom: 0, left: 0}
-	, width ="100%"
-	, height ="100%";
+	var margin = {top: 75, right: 25, bottom: 75, left: 100}
+	, width =400
+	, height =200 * this.yunq.length;
 
 	// x and y scales, I've used linear here but there are other options
 	// the scales translate data values to pixel values for you
 
-	var dy = d3.max(ydata) - d3.min(ydata);
+	var dy = d3.max(this.yunq) - d3.min(this.yunq);
 	var dx = d3.max(xdata) - d3.min(xdata);
 	this.sx = d3.time.scale()
-		.domain([d3.min(xdata) , d3.max(xdata)])  // the range of the values to plot
-		.range([100,500]);        // the pixel range of the x-axis
+		.domain([d3.min(xdata) , d3.max(xdata)]) 
+		.range([0, width]); 
 
 	this.sy = d3.scale.linear()
-		.domain([d3.min(ydata)-dy*.2, d3.max(ydata)+dy*.2])
-		.range([100, 500]);
+		.domain([d3.min(this.yunq)-dy*.2, d3.max(this.yunq)+dy*.2])
+		.range([0,height]);
 	var sx = this.sx, sy = this.sy;
 
 
 	// the chart object, includes all margins
 	this.chart = d3.select(this.el)
 	    .append('svg:svg')
-	    .attr('width',"100%")// width + margin.right + margin.left)
-	    .attr('height',"100%")// height + margin.top + margin.bottom)
+	    .attr('width',width + margin.right + margin.left)
+	    .attr('height', height + margin.top + margin.bottom)
 	    .attr('class', 'chart')
             .attr("d", this.pics);
 
 	// the main object where the chart and axis will be drawn
-	var main = this.chart.append('g')
-		.attr('width', "100%")
-		.attr('height', "100%")
+	this.main = this.chart.append('g')
+		.attr('transform', 'translate('+margin.left+', '+ margin.top+')')
+		.attr('width',width)
+		.attr('height',height)
 		.attr('class', 'main')   ;
 
 	this.drag_area = this.chart[0][0];
@@ -240,37 +302,48 @@ PicTimeView = Backbone.View.extend({
 	this.chart.on("mousemove", $.proxy(this.mousemove,this));
 	
 
-	/*
+
+
+	
 	// draw the x axis
 	var xAxis = d3.svg.axis()
 		.scale(sx)
 		.ticks(d3.time.hours, 24);
 
-	main.append('g')
+	this.main.append('g')
 	    .attr('transform', 'translate(0,' + height + ')')
 	    .attr('class', 'main axis date')
 	    .call(xAxis);
-	 */
+	 
 
-	// draw the y axis
-	var y_unique_vals = _.unique(_.sortBy(ydata,function(e){return e}));
-	this.yunq = y_unique_vals;
+	var sy = this.sy;
+	this.main.selectAll(".ylabel")
+	    .data(ydata)
+	    .enter().append("text")
+	    .attr("x",0)
+	    .attr("y", function(d) { return sy(d.id); })
+	    .attr("dx", -10) // padding-right
+	    .attr("dy", ".35em") // vertical-align: middle
+	    .attr("text-anchor", "end") // text-align: right
+	    .text(function(d){return d.name});
+
 
 	/*
 	var yAxis = d3.svg.axis()
 		.scale(sy)
 		.orient('left')
-		.ticks(y_unique_vals);
+		.ticks(0);
 
-	main.append('g')
+	this.main.append('g')
 	    .attr('transform', 'translate(0,0)')
 	    .attr('class', 'main axis yaxis')
 	    .call(yAxis);
-
 	 */
 
+	 
+
 	// draw the graph object
-	this.g =  main.append("svg:g")
+	this.g =  this.main.append("svg:g")
 	    .attr('class', 'main group'); 
 
 	this.drag_area = this.g[0][0];
@@ -286,10 +359,9 @@ PicTimeView = Backbone.View.extend({
 	    .attr("r", 5) // radius of circles
 	    .attr("class", "scatter-dot deselected")
 	    .style("opacity", 0.6)
-	    .on("click", function(d){console.log(d);}); // opacity of circle
 
 	this.thumblines_before = _.map(
-	    y_unique_vals,
+	    this.yunq,
 	    function(v){
 		return  new PicLineView({
 		    data:this.data,
@@ -300,7 +372,7 @@ PicTimeView = Backbone.View.extend({
 
 
 	this.thumblines_after = _.map(
-	    y_unique_vals,
+	    this.yunq,
 	    function(v){
 		return  new PicLineView({
 		    data:this.data,
@@ -311,11 +383,11 @@ PicTimeView = Backbone.View.extend({
 
 	_.each(this.thumblines_before,
 	       function(e1,i){
-		   $(this.chart[0][0]).append($(e1.el));
+		   $(this.main[0][0]).append($(e1.el));
 	     },this);
 	_.each(this.thumblines_after,
 	       function(e1,i){
-		   $(this.chart[0][0]).append($(e1.el));
+		   $(this.main[0][0]).append($(e1.el));
 	     },this);
 
 

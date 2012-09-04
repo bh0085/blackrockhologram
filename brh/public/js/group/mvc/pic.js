@@ -4,8 +4,9 @@ var PBPic = Backbone.Model.extend({
         return {
             added: null,
 	    date_taken:null,
-            name: null,
+            name: "untitled",
 	    thumbs:null,
+	    creator_name:"Anon",
 	    has_thumbs: false};
     },
     initialize:function(args){

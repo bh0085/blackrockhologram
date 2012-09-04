@@ -44,20 +44,6 @@ var BinView = Backbone.View.extend({
 	this.$el.html(Mustache.render(this.template,json));
 	//showpics(cache,this.el);
 	
-	/*
-	_.each(this.picviews,
-	       function(e){
-		   e.remove();
-	       },this);
-	
-	_.each(cache,
-	       function(e){
-		   pv = new PBPicView({"model":e});
-		   this.picviews.push(pv);
-		   this.$('.pics-container').append(pv.render().$el);
-		   
-	       }, this);
-	 */
 	return this;
     }
 })

@@ -4,4 +4,8 @@
 <div class="content">
   <div class="widget chart-container">
   </div>
+  <div class="widget selection-gallery-container">
+  </div>
+  
 </div>
+
