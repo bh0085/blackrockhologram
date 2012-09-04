@@ -1,1 +1,1 @@
-pictobin_url = "http://localhost:6543"
+pictobin_url = "http://pictobin.com"
