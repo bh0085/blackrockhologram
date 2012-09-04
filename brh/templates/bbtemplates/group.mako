@@ -4,7 +4,7 @@
   <ol>
     <li>
      <p> <h4><a class="bin-link-display">View and add group photos.</a></h4> Manage your group's repository by heading over to
-     <span class="bin-link-display"></span>. We use pictobin<a href="/faq">[?]</a> to gather photos and we collect them here to build the molehill.</p>
+     <a class="bin-link-display">pictobin</a>. We use pictobin<a href="/faq">[?]</a> to gather photos and we collect them here to build the molehill.</p>
     </li><li>
       <h4><a href="/groups/{{passphrase}}/annotationkit">Place photos in Space and Time.</a></h4> Molehill needs your input to cluster and process everybody's pictures. Head over to the<a href="/groups/{{passphrase}}/annotationkit"> Annotation Toolkit</a> and have fun.
       <div class="alert alert-info how-we-do-it">
