@@ -166,18 +166,23 @@ var  LineThumbView = Backbone.View.extend({
 	var m = this.model;
 
 	if(m !=null){
+	    var mt = m.get("medium_thumb");
+	    var vb =[50,50,100,100];// [mt.x,mt.y,mt.height];
 	    if(this.img == null){  
 		this.img = d3.select(this.el)
 		    .append('svg:image')
 		    .attr("style", "border:1px solid black;border-radius: 15px;")
 		    .attr("xlink:href", m.get("medium_thumb").url) 
 		    .attr("width", this.actual_width())
-		    .attr("height",this.actual_height());
+		    .attr("height",this.actual_height())
+		    .attr("viewBox", vb.join(' '));
 	    } else{
 		this.img
 		    .attr("xlink:href", m.get("medium_thumb").url) 
 		    .attr("width", this.actual_width())
-		    .attr("height",this.actual_height());
+		    .attr("height",this.actual_height())
+		    .attr("viewBox", vb.join(' '));
+
 	    }
 	} else {
 	    this.img.remove();

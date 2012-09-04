@@ -14,7 +14,14 @@ def main(global_config, **settings):
 
     config = Configurator(settings=settings)
     config.add_route('home', '/')
+
+    config.add_route('faq','/faq')
+    config.add_route('faq_changedramatically','/faq/changedramatically')
+    config.add_route('faq_building','/faq/building')
+    config.add_route('faq_missingdata','/faq/missingdata')
+    
     config.add_route('handle_pass','/handlepass')
+
     config.add_route('handle_email','/handleemail/{passphrase}',
                      factory = GroupResourceFactory)
     config.add_route("handle_place", "/handleplace/{passphrase}",

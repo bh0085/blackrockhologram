@@ -20,6 +20,20 @@ default_cache = 0;
 def my_view(request):
     return {}
 
+@view_config(route_name="faq_changedramatically", renderer='faq/changedramatically.mako',http_cache=default_cache)
+def faq_changedramatically(request):
+    print "cd"
+    return {}
+@view_config(route_name="faq_building", renderer='faq/building.mako',http_cache=default_cache)
+def faq_building(request):
+    return {}
+@view_config(route_name="faq_missingdata", renderer='faq/missingdata.mako',http_cache=default_cache)
+def faq_missingdata(request):
+    return {}
+@view_config(route_name="faq", renderer='faq/faq.mako',http_cache=default_cache)
+def faq(request):
+    return {}
+
 @view_config(route_name='handle_pass', renderer = 'json',http_cache=default_cache)
 def handle_pass(request):
     p = request.params['passphrase']
