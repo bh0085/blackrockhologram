@@ -103,7 +103,9 @@ class Group(Base_BRH):
     id = Column(Integer, primary_key = True)
     pb_id = Column(Integer, nullable = True, index = True)
     passphrase = Column(Unicode, nullable = False, unique = True)
-    
+    def unsyncedJSON(self, request = None,**kwargs):
+        return {"bin_url":"{0}/special/brh/bins/{1}".format(ph.pictobin_url,self.passphrase)}
+
 
 # maps 1:1 to PBPicture
 class Picture(Base_BRH):

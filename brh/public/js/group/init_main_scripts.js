@@ -9,6 +9,6 @@ $(function(){
 		  });
     $("body").append(gview.render().$el);
 
-    $(".bin-link-display").attr("href", curbin.get("url"));
+    $(".bin-link-display").attr("href", curgroup.get("bin_url"));
 
 });
