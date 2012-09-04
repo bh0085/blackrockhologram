@@ -24,8 +24,10 @@ PicTimeView = Backbone.View.extend({
     drag_area:null,
     data:null,
     scattered:null,
-    n_thumbs_in:2,
-    n_thumbs_out:2,
+    n_thumbs_in:1,
+    n_thumbs_out:0,
+    n_thumbs_out_after:3,
+    n_thumbs_in_after:1,
     thumbs_before_line_offset:-80,
     thumbs_after_line_offset:80,
     
@@ -156,12 +158,12 @@ PicTimeView = Backbone.View.extend({
 		if (!grps.after) grps.after = [];
 		if (!grps.between) grps.between = [];
 
-		b_prev = grps.before.slice(-1* this.n_thumbs_out,grps.before.length)
-		b_next = grps.between.slice(0,Math.min(this.n_thumbs_in, Math.floor(grps.between.length/2)))
-		a_prev_slice_start = Math.max(grps.between.length - this.n_thumbs_in,
+		b_prev = grps.before.slice(grps.before.length -1* this.n_thumbs_out,grps.before.length)
+		b_next = grps.between.slice(0,Math.min(this.n_thumbs_in, Math.floor(grps.between.length/2)));
+		a_prev_slice_start = Math.max(grps.between.length - this.n_thumbs_in_after,
 					      b_next.length);
 		a_prev = grps.between.slice(a_prev_slice_start,grps.between.length);
-		a_next = grps.after.slice(0,Math.min(grps.after.length, this.n_thumbs_out));
+		a_next = grps.after.slice(0,Math.min(grps.after.length, this.n_thumbs_out_after));
 		
 		this.thumblines_after[i].assignThumbs(a_prev,a_next);
 		this.thumblines_before[i].assignThumbs(b_prev,b_next);

@@ -30,8 +30,6 @@ def handle_pass(request):
         with transaction.manager:
             g = Group(passphrase = p)
             BRHSession.add(g)
-
-        
     return {"link":"/groups/{0}".format(p)}
 
 
@@ -81,7 +79,8 @@ def handle_place(request):
             existing_picture = BRHSession.query(User)\
                 .filter(User.email == em)\
                 .first()
-                             
+
+            
     raise Exception()
     
         

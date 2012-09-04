@@ -1,9 +1,9 @@
 <html>
 <head>
+    <%include file="/styles.mako"/>
     <meta HTTP-EQUIV="CONTENT-LANGUAGE" CONTENT="en-US,fr">
     <meta charset="utf-8">
     <title>Black Rock Hologram</title>
-    <%include file="/ga.mako"/>
 </head>
 <body class="home">
   <div class='bg-image'></div>
@@ -20,7 +20,6 @@
 
 
   <%include file="/home/about.mako"/>
-  <%include file="/styles.mako"/>
 
   <script src="/js/home/all.js"></script>    
   <script type="text/javascript" src="/js/deps/jquery-1.7.2.min.js"></script>
@@ -30,4 +29,4 @@
 
 
 </body>
-</html>
+</html> 
