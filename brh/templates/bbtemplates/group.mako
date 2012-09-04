@@ -3,10 +3,10 @@
   <div class="steps">
   <ol>
     <li>
-     <p> <h4>View and add group photos.</h4> Manage your group's repository by heading over to
+     <p> <h4><a class="bin-link-display">View and add group photos.</a></h4> Manage your group's repository by heading over to
      <span class="bin-container"></span>. We use pictobin<a href="/faq">[?]</a> to gather photos and we collect them here to build the molehill.</p>
     </li><li>
-      <h4>Place photos in Space and Time.</h4> Molehill needs your input to cluster and process everybody's pictures. Head over to the<a href="/groups/{{passphrase}}/annotationkit"> Annotation Toolkit</a> and have fun.
+      <h4><a href="/groups/{{passphrase}}/annotationkit">Place photos in Space and Time.</a></h4> Molehill needs your input to cluster and process everybody's pictures. Head over to the<a href="/groups/{{passphrase}}/annotationkit"> Annotation Toolkit</a> and have fun.
       <div class="alert alert-info how-we-do-it">
 	<p class="title"><span>Check out</span></p>
 	<p><a href="/faq/building">How we're combining user input, picture metadata and machine learning to build the the molehill</a></p></div>
@@ -31,8 +31,9 @@
 </script>
 
 <script type='unknown' id='bin-no-pictures-view-template'>
-  <div>Uh oh... there don't seem to be any pictures here just yet.</div>
-  <div>You or someone in your group will have to drop some off at <a href={{url}}>{{url}}</a> and then we can get down to placing them on the map.</div>
+  <p>Uh oh... there don't seem to be any pictures here just yet.</p>
+  <p>You or someone in your group will have to drop some off at <a href={{url}}>{{url}}</a> and then we can get down to placing them on the map.</p>
+  <p>... Or we might just be waiting for the server to compute thumbnails or metadata</p>
 </script>
 
 <script type='unknown' id='pb-pic-view-template'>

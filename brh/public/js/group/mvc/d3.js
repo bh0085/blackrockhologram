@@ -24,17 +24,20 @@ PicTimeView = Backbone.View.extend({
     drag_area:null,
     data:null,
     scattered:null,
-    n_thumbs_in:1,
-    n_thumbs_out:0,
-    n_thumbs_out_after:3,
-    n_thumbs_in_after:1,
-    thumbs_before_line_offset:-80,
-    thumbs_after_line_offset:80,
+    n_thumbs_in:4,
+    n_thumbs_out:2,
+    n_thumbs_out_after:2,
+    n_thumbs_in_after:4,
+    thumbs_before_line_offset:-45,
+    thumbs_after_line_offset:45,
+    thumbs_decay:.7,
+    thumbs_s0:1,
     
     initialize:function(){
 	time_chart_view = this;
     },
     mousedown:function(d){
+	console.log('detected drag')
 	this.dragging = true;
 	this.drag_screen_start = d3.mouse(this.drag_area);
 	this.drag_screen_last = d3.mouse(this.drag_area);
@@ -171,12 +174,12 @@ PicTimeView = Backbone.View.extend({
 		
 		d3.select(this.thumblines_before[i].el)
 		    .attr('transform', 'translate('+
-			  this.sx(this.selection_rect_data[0])+',' +
-			  (this.sy(tl.user_data)+this.thumbs_before_line_offset) + ')');
+			  Math.floor(this.sx(this.selection_rect_data[0]))+',' +
+			  Math.floor((this.sy(tl.user_data)+this.thumbs_before_line_offset)) + ')');
 		d3.select(this.thumblines_after[i].el)
 		    .attr('transform', 'translate('+
-			  this.sx(this.selection_rect_data[2])+',' +
-			  (this.sy(tl.user_data) +this.thumbs_after_line_offset)+ ')');
+			  Math.floor(this.sx(this.selection_rect_data[2]))+',' +
+			  Math.floor((this.sy(tl.user_data) +this.thumbs_after_line_offset))+ ')');
 
 	    }, this);
 
@@ -220,6 +223,7 @@ PicTimeView = Backbone.View.extend({
 		     this.sy.invert(rect[1]),
 		     this.sx.invert(rect[2]),
 		     this.sy.invert(rect[3])];
+	console.log(data_rect);
 	this.selection_rect_data = data_rect;
 	this.renderSelectionRect();
 	this.colorSelectedPoints();
@@ -228,7 +232,8 @@ PicTimeView = Backbone.View.extend({
 
     },
     render:function(){
-	pics = _.filter(this.model.pics, function(e){return e.get("datetime")});
+	pics = _.filter(this.model.pics, function(e){
+	    return e.get("small_thumb")!= null && e.get("datetime")});
 	if(pics.length == 0){
 	    json = curbin.toJSON();
 	    this.$el.html(
@@ -271,7 +276,7 @@ PicTimeView = Backbone.View.extend({
 	// x and y scales, I've used linear here but there are other options
 	// the scales translate data values to pixel values for you
 
-	var dy = d3.max(this.yunq) - d3.min(this.yunq);
+	var dy = d3.max(this.yunq) - d3.min(this.yunq) +1;
 	var dx = d3.max(xdata) - d3.min(xdata);
 	this.sx = d3.time.scale()
 		.domain([d3.min(xdata) , d3.max(xdata)]) 
@@ -297,12 +302,6 @@ PicTimeView = Backbone.View.extend({
 		.attr('width',width)
 		.attr('height',height)
 		.attr('class', 'main')   ;
-
-	this.drag_area = this.chart[0][0];
-	this.chart.on("mousedown",$.proxy(this.mousedown,this));
-	this.chart.on("mouseup", $.proxy(this.mouseup,this));
-	this.chart.on("mousemove", $.proxy(this.mousemove,this));
-	
 
 
 
@@ -348,10 +347,11 @@ PicTimeView = Backbone.View.extend({
 	this.g =  this.main.append("svg:g")
 	    .attr('class', 'main group'); 
 
-	this.drag_area = this.g[0][0];
-	this.g.on("mousedown",$.proxy(this.mousedown,this));
-	this.g.on("mouseup", $.proxy(this.mouseup,this));
-	this.g.on("mousemove", $.proxy(this.mousemove,this));
+	this.drag_area = this.main[0][0];
+
+	this.chart.on("mousedown",$.proxy(this.mousedown,this));
+	this.chart.on("mouseup", $.proxy(this.mouseup,this));
+	this.chart.on("mousemove", $.proxy(this.mousemove,this));
 
 	this.scattered =this.g.selectAll("scatter-dots")
 	    .data(pics_data)  // using the values in the ydata array
@@ -366,6 +366,7 @@ PicTimeView = Backbone.View.extend({
 	    this.yunq,
 	    function(v){
 		return  new PicLineView({
+		    chart:this,
 		    data:this.data,
 		    creatorid:v,
 		    side:'before'
@@ -377,6 +378,7 @@ PicTimeView = Backbone.View.extend({
 	    this.yunq,
 	    function(v){
 		return  new PicLineView({
+		    chart:this,
 		    data:this.data,
 		    creatorid:v,
 		    side:'after'

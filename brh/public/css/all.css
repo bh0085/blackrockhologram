@@ -4907,17 +4907,20 @@ body.home .about.expanded .expanded-content {
 .selection-line.toggled-off {
   display: none;
 }
+.selection-line.before .thumBb {
+  box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.15);
+}
 .selection-line.before .thumb.next {
-  outline: 5px solid #0088cc;
+  outline: 2px solid #0088cc;
 }
 .selection-line.before .thumb.prev {
-  outline: none;
+  outline: 1px solid black;
 }
 .selection-line.after .thumb.next {
-  outline: none;
+  outline: 1px solid black;
 }
 .selection-line.after .thumb.prev {
-  outline: 5px solid #0088cc;
+  outline: 2px solid #0088cc;
 }
 .scatter-dot.deselected {
   fill: none;
@@ -4970,7 +4973,8 @@ body .content-row {
 }
 .content .chart-container {
   float: left;
-  margin-right: 1.5em;
+  margin-right: 2.5em;
+  margin-bottom: 1em;
 }
 .content input.place {
   display: inline;
@@ -4982,6 +4986,7 @@ body .content-row {
   display: none;
 }
 .content .selection-header {
+  margin-right: 75px;
   display: inline-block;
   min-width: 150px;
   max-width: 250px;
@@ -4999,8 +5004,8 @@ body .content-row {
   position: fixed;
   right: 0px;
   top: 0px;
-  margin-top: 1.5em;
-  margin-right: 1.5em;
+  margin-top: 2em;
+  margin-right: 15em;
 }
 .place-gallery-container .place-gallery-view .place-view {
   display: block;

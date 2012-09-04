@@ -45,6 +45,9 @@ class PBPicture(Base_PB):
         for t in self.thumbs:
             if(t.size == PBThumb.THUMB_SIZES['medium']):
                    out['medium_thumb']  = t.toJSON()
+
+            if(t.size == PBThumb.THUMB_SIZES['small']):
+                   out['small_thumb']  = t.toJSON()
                         
         return out
 

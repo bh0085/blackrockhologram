@@ -8,4 +8,7 @@ $(function(){
 		      return new PBPic(e);
 		  });
     $("body").append(gview.render().$el);
+
+    $(".bin-link-display").attr("href", curbin.get("url"));
+
 });

@@ -28,6 +28,7 @@ var PicLineView = Backbone.View.extend({
 	this.creatorid = args.creatorid;
 	this.user_data = this.creatorid;
 	this.selection_side = args.side;
+	this.chart = args.chart;
 	this.pics = new PicLineCache(
 	    _.filter(this.data,
 		     function(e){
@@ -58,7 +59,7 @@ var PicLineView = Backbone.View.extend({
 			   this.pthumbs[i] = 
 			       new LineThumbView({
 				   model:this.pics.models[e],
-				   scale:.75*Math.pow(.5,i)
+				   scale:this.chart.thumbs_s0*Math.pow(this.chart.thumbs_decay,i)
 			       });
 		       } else {
 			   this.pthumbs[i].model = m;
@@ -71,7 +72,7 @@ var PicLineView = Backbone.View.extend({
 		   if (do_offset){
 		       d3.select(this.pthumbs[i].el)
 			   .attr('transform', 'translate('+
-				 (-1 * ofs)+',' + (-1*this.pthumbs[i].actual_height()/2) + ')')
+				 (-1 * ofs)+',' + Math.floor((-1*this.pthumbs[i].actual_height()/2)) + ')')
 			   .attr('class', 'prev thumb');
 		   }
 
@@ -90,7 +91,7 @@ var PicLineView = Backbone.View.extend({
 			   this.nthumbs[i] = 
 			       new LineThumbView({
 				   model:this.pics.models[e],
-				   scale:.75*Math.pow(.5,i)
+				   scale:this.chart.thumbs_s0*Math.pow(this.chart.thumbs_decay,i)
 			       });
 
 		       } else {
@@ -102,7 +103,7 @@ var PicLineView = Backbone.View.extend({
 		   if (do_offset){
 		       d3.select(this.nthumbs[i].el)
 			   .attr('transform', 'translate('+
-				 ( ofs)+',' + (-1*this.nthumbs[i].actual_height()/2) + ')')
+				 ( ofs)+',' + Math.floor(-1*this.nthumbs[i].actual_height()/2) + ')')
 			   .attr('class', 'next thumb');
 		   }
 		   ofs+=this.nthumbs[i].actual_width() + 15;
@@ -166,22 +167,18 @@ var  LineThumbView = Backbone.View.extend({
 	var m = this.model;
 
 	if(m !=null){
-	    var mt = m.get("medium_thumb");
-	    var vb =[50,50,100,100];// [mt.x,mt.y,mt.height];
 	    if(this.img == null){  
 		this.img = d3.select(this.el)
 		    .append('svg:image')
 		    .attr("style", "border:1px solid black;border-radius: 15px;")
-		    .attr("xlink:href", m.get("medium_thumb").url) 
+		    .attr("xlink:href", m.get("small_thumb").url) 
 		    .attr("width", this.actual_width())
-		    .attr("height",this.actual_height())
-		    .attr("viewBox", vb.join(' '));
+		    .attr("height",this.actual_height());
 	    } else{
 		this.img
-		    .attr("xlink:href", m.get("medium_thumb").url) 
+		    .attr("xlink:href", m.get("small_thumb").url) 
 		    .attr("width", this.actual_width())
-		    .attr("height",this.actual_height())
-		    .attr("viewBox", vb.join(' '));
+		    .attr("height",this.actual_height());
 
 	    }
 	} else {
@@ -191,10 +188,10 @@ var  LineThumbView = Backbone.View.extend({
 	return this;
     },
     actual_width:function(){
-	return this.model.get("medium_thumb").width * this.scale;
+	return Math.floor(this.model.get("small_thumb").width * this.scale);
     },
     actual_height:function(){
-	return this.model.get("medium_thumb").height * this.scale;
+	return Math.floor(this.model.get("small_thumb").height * this.scale);
     },
     /**
      * Custom make method needed as backbone does not support creation of
