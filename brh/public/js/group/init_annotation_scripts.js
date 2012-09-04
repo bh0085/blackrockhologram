@@ -46,11 +46,8 @@ PlaceView =Backbone.View.extend({
 	var json = this.model.toJSON();
 	json.count = this.model.get("pictures").length;
 	cols = _.map(_.range(3) ,function(e){return Math.floor(Math.random()*128)+64});
-
 	json.med_color = 'rgba('+cols.join(', ')+',1)';
-	json.light_color =  'rgba('+cols_light.join(', ')+',1)';
-	json.dark_color =  'rgba('+cols_dark.join(', ')+',1)';
-			  
+		
 	this.$el.html(Mustache.render(this.template,json));
 	return this;
     }
