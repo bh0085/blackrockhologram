@@ -39,10 +39,11 @@
   <div class="close-container">
   <button type="button" class="close">×</button>
   </div>
-  <img class="medium-thumb-display" 
-       src="{{medium_thumb.url}}"
-       style="		width:{{medium_thumb.width}}px;
-		height:{{medium_thumb.height}}px;" ></img>
+  <div class="medium-thumb-display" 
+       style="background-image:url('{{medium_thumb.url}}');
+	      background-position:-{{medium_thumb.x}}px -{{medium_thumb.y}}px;
+	      width:{{medium_thumb.width}}px;
+	      height:{{medium_thumb.height}}px;" ></div>
   <ul class="info">
   <li class="name-display info-display">{{creator_name}} - {{name}}</li>
   <li class="date-display info-display">{{date_string}}, {{String(datetime)}}</li>
