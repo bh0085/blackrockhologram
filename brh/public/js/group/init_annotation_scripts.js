@@ -22,9 +22,17 @@ $(function(){
 
 Place = Backbone.Model.extend({
     defaults:{
-	groupid:none
+	groupid:null,
+	coordinates:null,
+	pictures:null,
     }
 });
+
+PlaceCoordinate = Backbone.Model.extend({
+})
+
+
+
 PlaceCache = Backbone.Collection.extend({
     model:Place
 })

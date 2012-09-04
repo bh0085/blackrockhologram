@@ -48,6 +48,13 @@ var ThumbCache = Backbone.Model.extend({
 });
 
 var Pic = Backbone.Model.extend({
+    defaults:{
+	group:null,
+	places:null,
+	coordinates:null,
+	pb_id:null,
+	groupid:null,
+    },
     seconds:function(){
 	return Math.random() * 1000;
     },
