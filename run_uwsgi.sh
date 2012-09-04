@@ -1,5 +1,13 @@
 #!/bin/bash
 
+PGIDFILE="./blackrock.pgid"
+if [[ -f $PGIDFILE ]]; then
+    # kill running uwsgi
+    kill -KILL "-`cat $PGIDFILE`"
+fi
+PGID=`ps axo pid,pgid|grep $$|head -n1|cut -d\  -f2`
+echo -n $PGID > $PGIDFILE
+
 # kill running uwsgi
 #while `ps axo pid,command,args | grep bin/uwsgi | grep $HOME/pb | grep -v grep >&/dev/null`; do
 #    killall -QUIT uwsgi
@@ -29,6 +37,6 @@ venv/bin/uwsgi -b 64000                                 \
                -H $PBDIR/venv/                          \
                --protocol=${PROTOCOL}                   \
                --paste config:$PBDIR/${RELEASE}.ini     \
-               --socket :6544                           \
+               --socket :6545                           \
                --logto $PBDIR/venv/data/uwsgi.log       \
                -M 2>&1 | tee run_uwsgi.out
