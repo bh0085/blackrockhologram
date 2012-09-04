@@ -6,7 +6,7 @@
 </head>
 <body class="home">
   <div class='bg-image'></div>
-  <div><h3>We seem to be experiencing some server issues :(, please bear with us and we'll fix em pronto!</h3></div>
+  <div><h4>Server issues are fixed :)</h4></div>
   <div><p>We've just got back from the desert so this site isn't really done yet.</p><p>Enter the passphrase from your token and check it out!</p></div>
 
   <div class="passphrase-submitter">

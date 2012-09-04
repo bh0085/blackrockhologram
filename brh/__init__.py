@@ -17,6 +17,8 @@ def main(global_config, **settings):
     config.add_route('handle_pass','/handlepass')
     config.add_route('handle_email','/handleemail/{passphrase}',
                      factory = GroupResourceFactory)
+    config.add_route("handle_place", "/handleplace/{passphrase}",
+                     factory=GroupResourceFactory)
     config.add_route("group_main", '/groups/{passphrase}',
                      factory = GroupResourceFactory)
 
