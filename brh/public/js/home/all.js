@@ -5,10 +5,8 @@ function submit_passphrase(ev){
 }
 
 function passphrase_submitted(data){
-    $(".passphrase-submitter").append(
-	$("<div>",{class:"passphrase-link"})
-	    .append($("<a>",{href:data.link}).text(data.link))
-    );
+    window.location = data.link
+    
     
 }
 

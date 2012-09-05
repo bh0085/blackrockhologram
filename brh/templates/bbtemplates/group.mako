@@ -1,5 +1,5 @@
 <script type='unknown' id='group-view-template'>
-  <span class="headline"><h3>Group {{id}}  with passphrase "{{passphrase}}" is good to go! </h3><h5>Here's how it works.</h5></span>
+  <span class="headline"><h3>Group {{id}}  with passphrase "{{passphrase}}" is good to go! </h3><a class="bin-link-display"><h3>Click here to view and add photos</h3></a></span>
   <div class="steps">
   <ol>
     <li>
