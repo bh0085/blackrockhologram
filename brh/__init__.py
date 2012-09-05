@@ -28,6 +28,9 @@ def main(global_config, **settings):
                      factory=GroupResourceFactory)
     config.add_route("group_main", '/groups/{passphrase}',
                      factory = GroupResourceFactory)
+    config.add_route('group_about','/groups/{passphrase}/about',
+                     factory = GroupResourceFactory)
+
 
 
     config.add_route("group_molehill","/groups/{passphrase}/molehill",

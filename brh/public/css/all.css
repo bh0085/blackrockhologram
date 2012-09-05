@@ -4867,24 +4867,52 @@ body.home .about.expanded .expanded-content {
   text-size: 1.5em;
   text-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.1);
 }
-.steps {
-  box-sizing: border-box;
-  width: 500px;
+.steps-container {
+  width: 600px;
   position: relative;
   display: block;
-  border: 1px solid lightgray;
-  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.1);
   left: 50%;
-  margin-left: -250px;
-  padding: 1.5em;
+  margin-left: -300px;
   margin-top: 2.5em;
 }
-.steps .alert {
+.steps-container .steps-above {
+  text-align: left;
+}
+.steps-container .steps-above a {
+  float: right;
+  margin-left: 1.5em;
+}
+.steps-container .steps {
+  box-sizing: border-box;
+  border: 1px solid lightgray;
+  background-color: whitesmoke;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.1);
+  padding: 1.5em;
+}
+.steps-container .steps li {
+  background-color: transparent;
+}
+.steps-container .steps li:not(:hover) .steps-item-content {
+  opacity: .3;
+}
+.steps-container .steps .alert {
   margin: 2em;
 }
-.steps .alert .title {
+.steps-container .steps .alert .title {
   font-weight: bold;
   text-align: center;
+}
+.s1-content {
+  display: inline;
+}
+.s2-content {
+  display: none;
+}
+.state-two .s1-content {
+  display: none;
+}
+.state-two .s2-content {
+  display: inline;
 }
 .axis path,
 .axis line {

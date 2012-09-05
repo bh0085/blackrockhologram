@@ -34,6 +34,7 @@ def faq_missingdata(request):
 def faq(request):
     return {}
 
+
 @view_config(route_name='handle_pass', renderer = 'json',http_cache=default_cache)
 def handle_pass(request):
     p = request.params['passphrase']
@@ -139,6 +140,15 @@ def group_molehill(request):
 def group_annotationkit(request):
     return {'sessionInfo':establish_context(request),
             'view':'annotation'}
+
+
+
+@view_config(route_name="group_about", renderer="group_main.mako",http_cache=default_cache)
+def group_about(request):
+    return {'sessionInfo':establish_context(request),
+            'view':'about'}
+
+
 
 
 @view_config(route_name="group_notifyme", renderer="group_main.mako",http_cache=default_cache)
