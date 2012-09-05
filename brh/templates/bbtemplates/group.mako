@@ -1,7 +1,7 @@
 <script type='unknown' id='group-view-template'>
   <span class="headline"><h4>Group "{{passphrase}}" is all set. Its photos will live <a class="bin-link-display">here</a>!</h4></span>
   
-  <div class='state-container'>Hello all - there've been a few hitches here and at pictobin in the past day or so. <a href="#" class="s1-content" onclick="$(this).parent().toggleClass('state-two');"> ...show more</a><span class="s2-content">. We're working them out! <a class="bin-link-display" href=#>Picture submission and viewing as a group </a>will work great; so will signing up to be  <a href="/groups/{{passphrase}}/notifyme">notified</a>. Its going to be a couple of days before everything else does! Thanks for bearing with us :).</br> (9/5/2012)
+  <div class='state-container'><p>Hello all - we're working out a few launch hiccups that have come up here and at pictobin in the past day or so.<a href="#" class="s1-content" onclick="$(this).parentsUntil('.state-container').last().parent().toggleClass('state-two');"> ...show more</a></p><span class="s2-content"><p><a class="bin-link-display" href=#>Photo submission and viewing</a> as a group should work fine now; so will signing up to be  <a href="/groups/{{passphrase}}/notifyme">notified</a> of major changes.</p> Its going to be a couple of days before everything else does! Thanks for bearing with us :).</br> (9/5/2012)
 	<a href="#" onclick="$(this).parentsUntil('.state-container').last().parent().toggleClass('state-two');"> ...show less</a></span></div>
   <div class="steps-container">
   <div class="steps-above">
