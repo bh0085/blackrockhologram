@@ -4,6 +4,7 @@
     <meta HTTP-EQUIV="CONTENT-LANGUAGE" CONTENT="en-US,fr">
     <meta charset="utf-8">
     <title>Black Rock Hologram</title>
+    <%include file="/ga.mako" />
 </head>
 <body class="home">
   <div class='bg-image'></div>
