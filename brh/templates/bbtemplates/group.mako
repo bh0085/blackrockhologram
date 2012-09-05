@@ -5,7 +5,7 @@
 	<a href="#" onclick="$(this).parentsUntil('.state-container').last().parent().toggleClass('state-two');"> ...show less</a></span></div>
   <div class="steps-container">
   <div class="steps-above">
-    Here's how to add to molehill: <a href="/faq">faq</a><a href="/groups/{{passphrase}}/about">about</a><a href="/img/mockup.pdf">mockup</a>
+    Here's how build molehill with us. <a href="/faq">faq</a><a href="/groups/{{passphrase}}/about">about</a><a href="/img/mockup.pdf">mockup</a>
 
   </div>
   <div class="steps">
